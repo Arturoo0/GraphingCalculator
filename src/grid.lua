@@ -1,21 +1,20 @@
 
 local grid = {
-  size = 0,
-  
-
+  size = 35,
 }
 
 function grid:draw()
   currentX = 0
   currentY = 0
 
-  for i = 1, 10 do
-    for i = 1, 10 do
-      love.graphics.rectangle("line", currentX, currentY, self.sizeX, self.sizeY)
-      currentX = currentX + self.sizeX
+  for i = 1, 20 do
+    for i = 1, 20 do
+      love.graphics.setColor(0,0,0)
+      love.graphics.rectangle("line", currentX, currentY, self.size, self.size)
+      currentX = currentX + self.size
     end
     currentX = 0
-    currentY = currentY + self.sizeY
+    currentY = currentY + self.size
   end
 end
 
