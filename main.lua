@@ -29,6 +29,8 @@ function love.load()
     ["turquoise-dark"] = "#16a085"
   }
 
+  camera:setPosition(525, 525)
+
   color:setBackground("white-light")
 end
 
@@ -39,5 +41,6 @@ end
 function love.draw()
   camera:set()
   grid:draw()
+  love.graphics.circle("fill", 875, 875, 25)
   camera:unset()
 end
