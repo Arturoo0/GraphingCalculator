@@ -1,6 +1,8 @@
 
 local grid = {
   size = 35,
+  width = 35 * 50,
+  height = 35 * 50,
 }
 
 function grid:draw()
@@ -15,9 +17,9 @@ function grid:draw()
 
     if (counter == 5) then
       love.graphics.setLineWidth(3)
-      love.graphics.line((i - 1) * self.size, 0, (i - 1) * self.size, self.size * 50)
+      love.graphics.line((i - 1) * self.size, 0, (i - 1) * self.size, self.width)
 
-      love.graphics.line(0, currentY, self.size * 50, currentY)
+      love.graphics.line(0, currentY, self.height, currentY)
       counter = 0
     end
 
@@ -35,9 +37,9 @@ function grid:draw()
 
   end
 
-  love.graphics.setLineWidth(4)
-  love.graphics.line(0, 875, 1750, 875)
-  love.graphics.line(875, 0, 875, 1750)
+  love.graphics.setLineWidth(5)
+  love.graphics.line(0, 875, grid.width, 875)
+  love.graphics.line(875, 0, 875, grid.height)
 
 
 end
