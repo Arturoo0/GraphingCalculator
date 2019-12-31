@@ -1,14 +1,16 @@
 
 local lg = love.graphics
 
+WIDTH = lg:getWidth()
+HEIGHT = lg:getHeight()
+HALF_WIDTH = WIDTH * 0.5
+HALF_HEIGHT = HEIGHT * 0.5
+
 color = require("src/color")
 local grid = require("src/grid")
 local camera = require("src/camera")
 
 function love.load()
-  love.window.setMode(700, 700, {
-    display = 2
-  })
 
   color:init {
     ["black-light"] = "#353b48",
@@ -31,13 +33,13 @@ function love.load()
     ["turquoise-dark"] = "#16a085"
   }
 
-  camera:setPosition(525, 525)
+  camera:setPosition(grid.halfWidth - HALF_WIDTH, grid.halfHeight - HALF_HEIGHT)
 
-  camera:setBoundaries{
+  camera:setBoundaries {
     minX = 0,
     minY = 0,
-    maxX = grid.width - lg:getWidth(),
-    maxY = grid.height - lg:getHeight()
+    maxX = grid.width - WIDTH,
+    maxY = grid.height - HEIGHT
   }
 
   color:setBackground("white-light")
@@ -48,10 +50,12 @@ function love.update(dt)
 end
 
 function love.draw()
-
   camera:set()
+
   grid:draw()
+  
   color:set("blue-dark")
   love.graphics.circle("fill", 875, 875, 12)
+
   camera:unset()
 end

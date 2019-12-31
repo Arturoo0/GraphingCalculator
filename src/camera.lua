@@ -60,8 +60,8 @@ function camera:update(dt)
     local dx = (self.clickedX - mouseX)
     local dy = (self.clickedY - mouseY)
 
-    self.x = self.initialX + dx
-    self.y = self.initialY + dy
+    self.x = self.initialX + dx * 1.5
+    self.y = self.initialY + dy * 1.5
 
     self.x = clamp(self.x, self.boundaries.minX, self.boundaries.maxX)
     self.y = clamp(self.y, self.boundaries.minY, self.boundaries.maxY)

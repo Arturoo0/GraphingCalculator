@@ -2,7 +2,8 @@
 -- Author: Bruce Berrios
 -- Description: Utility to manage colors
 
-local sub, len, rep, match, tonum, tostr = string.sub, string.len, string.rep, string.match, tonumber, tostring
+local lg = love.graphics
+local sub, len, rep, match, tonum, tostr, unp = string.sub, string.len, string.rep, string.match, tonumber, tostring, unpack
 
 local color = {
   colors = {}
@@ -53,12 +54,15 @@ function color:add(key, color)
   self.colors[key] = (type(color) == "table") and parseRGBA(color) or parseHex(color)
 end
 
-function color:set(key)
-  love.graphics.setColor(self.colors[key])
+function color:set(key, alpha)
+  local r, g, b, a = unp(self.colors[key])
+  a = alpha or a
+
+  lg.setColor(r, g, b, a)
 end
 
 function color:setBackground(key)
-  love.graphics.setBackgroundColor(self.colors[key])
+  lg.setBackgroundColor(self.colors[key])
 end
 
 function color:get(key)
