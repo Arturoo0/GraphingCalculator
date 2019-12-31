@@ -1,5 +1,5 @@
 
-local color = require("src/color")
+color = require("src/color")
 local grid = require("src/grid")
 local camera = require("src/camera")
 
