@@ -10,6 +10,8 @@ color = require("src/color")
 local grid = require("src/grid")
 local camera = require("src/camera")
 
+local graphCanvas = lg.newCanvas(grid.width, grid.height)
+
 function love.load()
 
   color:init {
@@ -29,7 +31,7 @@ function love.load()
     ["purple-dark"] = "#8e44ad",
     ["white-light"] = "#ecf0f1",
     ["white-dark"] = "#bdc3c7",
-    ["turquoise"] = "#1abc9c",
+    ["turquoise-light"] = "#1abc9c",
     ["turquoise-dark"] = "#16a085"
   }
 
@@ -43,19 +45,45 @@ function love.load()
   }
 
   color:setBackground("white-light")
+
+  local coords = {}
+
+  local function func(x)
+    return 10 * (1/x)
+  end
+
+  for x = -50, 50, 0.001 do
+    coords[#coords + 1] = ((grid.size / 2) * x) + grid.halfWidth
+    coords[#coords + 1] = -((grid.size / 2) * func(x)) + grid.halfHeight
+  end
+
+  graphCanvas:renderTo(function()
+    lg.clear()
+    lg.setPointSize(6)
+    color:set("purple-dark")
+    lg.points(coords)
+  end)
 end
 
 function love.update(dt)
   camera:update(dt)
 end
 
+local coords = {}
+
 function love.draw()
   camera:set()
 
   grid:draw()
-  
-  color:set("blue-dark")
-  love.graphics.circle("fill", 875, 875, 12)
+
+  color:set("white-light")
+
+  lg.setBlendMode("alpha", "premultiplied")
+  lg.draw(graphCanvas)
+  lg.setBlendMode("alpha")
 
   camera:unset()
+
+  color:set("black-dark")
+  lg.print(love.timer.getFPS())
 end
