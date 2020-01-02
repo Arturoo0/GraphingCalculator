@@ -10,6 +10,8 @@ color = require("src/color")
 local grid = require("src/grid")
 local camera = require("src/camera")
 
+local graphCanvas = lg.newCanvas(grid.width, grid.height)
+
 function love.load()
 
   color:init {
@@ -43,6 +45,24 @@ function love.load()
   }
 
   color:setBackground("white-light")
+
+  local coords = {}
+
+  local function func(x)
+    return 10 * (1/x)
+  end
+
+  for x = -50, 50, 0.001 do
+    coords[#coords + 1] = ((grid.size / 2) * x) + grid.halfWidth
+    coords[#coords + 1] = -((grid.size / 2) * func(x)) + grid.halfHeight
+  end
+
+  graphCanvas:renderTo(function()
+    lg.clear()
+    lg.setPointSize(6)
+    color:set("purple-dark")
+    lg.points(coords)
+  end)
 end
 
 function love.update(dt)
@@ -51,40 +71,16 @@ end
 
 local coords = {}
 
--- Parabola
--- for i = -50, 50, 0.01 do
---   coords[#coords + 1] = (grid.tiles * i) + grid.halfWidth
---   coords[#coords + 1] = -(grid.tiles * 1 * (i * i)) + grid.halfHeight
--- end
-
--- Sine
--- for i = -50, 50, 0.01 do
---   coords[#coords + 1] = (grid.tiles * i) + grid.halfWidth
---   coords[#coords + 1] = -(grid.tiles * 1 * math.sin(i)) + grid.halfHeight
--- end
-
--- Cosine
--- for i = -50, 50, 0.01 do
---   coords[#coords + 1] = (grid.tiles * i) + grid.halfWidth
---   coords[#coords + 1] = -(grid.tiles * 1 * math.cos(i)) + grid.halfHeight
--- end
-
---Squareroot
-for x = -50, 50, 0.001 do
-  coords[#coords + 1] = (grid.tiles * x) + grid.halfWidth
-  coords[#coords + 1] = -(grid.tiles * (math.sqrt(x))) + grid.halfHeight
-end
-
 function love.draw()
   camera:set()
 
   grid:draw()
 
-  lg.setPointSize(5)
+  color:set("white-light")
 
-  color:set("turquoise-light")
-
-  lg.points(coords)
+  lg.setBlendMode("alpha", "premultiplied")
+  lg.draw(graphCanvas)
+  lg.setBlendMode("alpha")
 
   camera:unset()
 
