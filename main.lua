@@ -29,7 +29,7 @@ function love.load()
     ["purple-dark"] = "#8e44ad",
     ["white-light"] = "#ecf0f1",
     ["white-dark"] = "#bdc3c7",
-    ["turquoise"] = "#1abc9c",
+    ["turquoise-light"] = "#1abc9c",
     ["turquoise-dark"] = "#16a085"
   }
 
@@ -49,13 +49,45 @@ function love.update(dt)
   camera:update(dt)
 end
 
+local coords = {}
+
+-- Parabola
+-- for i = -50, 50, 0.01 do
+--   coords[#coords + 1] = (grid.tiles * i) + grid.halfWidth
+--   coords[#coords + 1] = -(grid.tiles * 1 * (i * i)) + grid.halfHeight
+-- end
+
+-- Sine
+-- for i = -50, 50, 0.01 do
+--   coords[#coords + 1] = (grid.tiles * i) + grid.halfWidth
+--   coords[#coords + 1] = -(grid.tiles * 1 * math.sin(i)) + grid.halfHeight
+-- end
+
+-- Cosine
+-- for i = -50, 50, 0.01 do
+--   coords[#coords + 1] = (grid.tiles * i) + grid.halfWidth
+--   coords[#coords + 1] = -(grid.tiles * 1 * math.cos(i)) + grid.halfHeight
+-- end
+
+--Squareroot
+for x = -50, 50, 0.001 do
+  coords[#coords + 1] = (grid.tiles * x) + grid.halfWidth
+  coords[#coords + 1] = -(grid.tiles * (math.sqrt(x))) + grid.halfHeight
+end
+
 function love.draw()
   camera:set()
 
   grid:draw()
-  
-  color:set("blue-dark")
-  love.graphics.circle("fill", 875, 875, 12)
+
+  lg.setPointSize(5)
+
+  color:set("turquoise-light")
+
+  lg.points(coords)
 
   camera:unset()
+
+  color:set("black-dark")
+  lg.print(love.timer.getFPS())
 end
