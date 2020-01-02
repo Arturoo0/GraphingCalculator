@@ -58,15 +58,17 @@ function grid:draw()
 
   yAxisTemp = 0
 
-  for i = 5,1,-1 do -- top
+  for i = 5,1,-1 do -- top y axis
     lg.print((i * self.scale), self.halfWidth + 5, yAxisTemp + 3, r, 1)
     yAxisTemp = yAxisTemp + 175
   end
 
-  for i = 5,0,-1 do -- left x axis
+  for i = 5,1,-1 do -- left x axis
     lg.print(-(i * self.scale), xAxisTemp + 7, yAxisTemp + 3, r, 1)
     xAxisTemp = xAxisTemp + 175
   end
+
+  xAxisTemp = xAxisTemp + 175
 
   for i = 1,5 do -- right x axis
     if (i == 5) then
