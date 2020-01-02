@@ -1,11 +1,16 @@
 -- Author: Bruce Berrios
 -- Description: Camera class
 
-local lg, lm = love.graphics, love.mouse
+local lg, lm, lk = love.graphics, love.mouse, love.keyboard
 
 local camera = {
   x = 0,
   y = 0,
+
+  speed = 500,
+
+  velX = 0,
+  velY = 0,
 
   boundaries = {
     minX = 0,
@@ -42,6 +47,20 @@ local function clamp(x, min, max)
   return x
 end
 
+function camera:control(dt)
+
+  local wIsDown = lk.isDown("w")
+  local aIsDown = lk.isDown("a")
+  local sIsDown = lk.isDown("s")
+  local dIsDown = lk.isDown("d")
+
+  self.velY = (wIsDown) and -self.speed or 0
+  self.velY = (sIsDown) and self.speed or self.velY
+  self.velX = (aIsDown) and -self.speed or 0
+  self.velX = (dIsDown) and self.speed or self.velX
+
+end
+
 function camera:update(dt)
 
   local mouseX, mouseY = lm.getPosition()
@@ -62,13 +81,17 @@ function camera:update(dt)
 
     self.x = self.initialX + dx * 1.5
     self.y = self.initialY + dy * 1.5
-
-    self.x = clamp(self.x, self.boundaries.minX, self.boundaries.maxX)
-    self.y = clamp(self.y, self.boundaries.minY, self.boundaries.maxY)
-
   else
     self.wasClicked = false
+
+    self:control(dt)
+
+    self.x = self.x + self.velX * dt
+    self.y = self.y + self.velY * dt
   end
+
+  self.x = clamp(self.x, self.boundaries.minX, self.boundaries.maxX)
+  self.y = clamp(self.y, self.boundaries.minY, self.boundaries.maxY)
 
 end
 
