@@ -1,4 +1,5 @@
 
+
 local lg = love.graphics
 
 local grid = {
@@ -8,6 +9,7 @@ local grid = {
   halfWidth = 875,
   halfHeight = 875,
   tiles = 50,
+  scale = 10
 }
 
 function grid:draw()
@@ -17,6 +19,8 @@ function grid:draw()
   local currentX = 0
   local currentY = 0
   local counter = 0
+  local yAxisTemp = self.halfHeight + (self.height/self.scale)
+  local xAxisTemp = 0
 
   for i = 1, self.tiles do
 
@@ -41,6 +45,36 @@ function grid:draw()
     currentX = 0
     currentY = currentY + self.size
 
+  end
+
+  for i = 1,5 do -- bottom y axis
+    if (i == 5) then
+      lg.print(-(i * self.scale), self.halfWidth + 5, yAxisTemp - 15, r, 1)
+    else
+      lg.print(-(i * self.scale), self.halfWidth + 5, yAxisTemp + 3, r, 1)
+      yAxisTemp = yAxisTemp + 175
+    end
+  end
+
+  yAxisTemp = 0
+
+  for i = 5,1,-1 do -- top
+    lg.print((i * self.scale), self.halfWidth + 5, yAxisTemp + 3, r, 1)
+    yAxisTemp = yAxisTemp + 175
+  end
+
+  for i = 5,0,-1 do -- left x axis
+    lg.print(-(i * self.scale), xAxisTemp + 7, yAxisTemp + 3, r, 1)
+    xAxisTemp = xAxisTemp + 175
+  end
+
+  for i = 1,5 do -- right x axis
+    if (i == 5) then
+      lg.print((i * self.scale), xAxisTemp - 17, yAxisTemp + 3, r, 1)
+    else
+      lg.print((i * self.scale), xAxisTemp + 7, yAxisTemp + 3, r, 1)
+      xAxisTemp = xAxisTemp + 175
+    end
   end
 
   lg.setLineWidth(5)
