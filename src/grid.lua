@@ -1,9 +1,11 @@
 
+-- Author : Arturo Portelles
+-- Grid layout and scale
 
 local lg = love.graphics
 
 local grid = {
-  size = 35,
+  tileSize = 35,
   width = 1750,
   height = 1750,
   halfWidth = 875,
@@ -27,7 +29,7 @@ function grid:draw()
     if (counter == 5) then
       lg.setLineWidth(3)
 
-      lg.line((i - 1) * self.size, 0, (i - 1) * self.size, self.width)
+      lg.line((i - 1) * self.tileSize, 0, (i - 1) * self.tileSize, self.width)
       lg.line(0, currentY, self.height, currentY)
 
       counter = 0
@@ -36,14 +38,14 @@ function grid:draw()
     lg.setLineWidth(1)
 
     for i = 1, self.tiles do
-      lg.rectangle("line", currentX, currentY, self.size, self.size)
+      lg.rectangle("line", currentX, currentY, self.tileSize, self.tileSize)
 
-      currentX = currentX + self.size
+      currentX = currentX + self.tileSize
     end
 
     counter = counter + 1
     currentX = 0
-    currentY = currentY + self.size
+    currentY = currentY + self.tileSize
 
   end
 

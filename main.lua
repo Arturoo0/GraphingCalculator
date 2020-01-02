@@ -49,12 +49,12 @@ function love.load()
   local coords = {}
 
   local function func(x)
-    return 10 * (1/x)
+    return x^3
   end
 
   for x = -50, 50, 0.001 do
-    coords[#coords + 1] = ((grid.size / 2) * x) + grid.halfWidth
-    coords[#coords + 1] = -((grid.size / 2) * func(x)) + grid.halfHeight
+    coords[#coords + 1] = ((grid.tileSize / 2) * x) + grid.halfWidth
+    coords[#coords + 1] = -((grid.tileSize / 2) * func(x)) + grid.halfHeight
   end
 
   graphCanvas:renderTo(function()
