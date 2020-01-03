@@ -99,6 +99,7 @@ local myTB = textbox:new{
 
 function love.load(arg)
   love.keyboard.setKeyRepeat(true)
+  love.graphics.setBackgroundColor(1, 1, 1)
 end
 
 function love.update(dt)
@@ -115,4 +116,8 @@ end
 
 function love.keypressed(key)
   myTB:keypressed(key)
+end
+
+function love.mousepressed(x, y, button)
+  myTB:mousepressed(x, y, button)
 end
