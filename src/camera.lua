@@ -40,7 +40,6 @@ function camera:setPosition(x, y)
 end
 
 local function clamp(x, min, max)
-
   x = (x < min) and min or x
   x = (x > max) and max or x
 
