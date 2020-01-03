@@ -93,8 +93,10 @@ local textbox = require("src/textbox")
 
 local myTB = textbox:new{
   y = 150,
-  x = 150,
-  font = love.graphics.newFont(32)
+  x = 0,
+  height = 100,
+  width = 400,
+  font = love.graphics.newFont(40)
 }
 
 function love.load(arg)
@@ -119,5 +121,6 @@ function love.keypressed(key)
 end
 
 function love.mousepressed(x, y, button)
+
   myTB:mousepressed(x, y, button)
 end

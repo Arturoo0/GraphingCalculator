@@ -5,13 +5,14 @@ local utf8 = require("utf8")
 
 local lg = love.graphics
 local concat, len, sub, offset = table.concat, utf8.len, string.sub, utf8.offset
-local cos = math.cos
+local cos, max, min, floor = math.cos, math.max, math.min, math.floor
 
 local textbox = {}
 
 textbox.__index = textbox
 
 function textbox:new(properties)
+  local properties = properties or {}
 
   local tb = {
     x = properties.x or 0,
@@ -20,35 +21,55 @@ function textbox:new(properties)
     font = properties.font or lg:getFont(),
     backgroundColor = properties.backgroundColor or {1, 1, 1, 1},
     textColor = properties.textColor or {0, 0, 0, 1},
-    borderColor = properties.borderColor or {0, 0.25, 0.5, 1},
-    borderWeight = properties.borderWeight or 2,
-
+    borderColor = properties.borderColor or {0, 0.75, 1, 0.5},
+    borderWeight = properties.borderWeight or 3,
     focus = false,
+    offset = 0,
+    maxinput = properties.maxinput or 140,
   }
 
+  tb.characterWidth = tb.font:getWidth("W|")
   tb.fontHeight = tb.font:getHeight()
 
   tb.width = properties.width or tb.font:getWidth(tb.text) * 2
-  tb.height = properties.height or tb.fontHeight * 1.2
+  tb.height = properties.height or tb.fontHeight * 1.4
+
+  tb.paddingTop = properties.paddingTop or (tb.height * 0.5) - (tb.fontHeight * 0.5)
+  tb.paddingLeft = properties.paddingLeft or 12
 
   tb.cursor = {
     x = 0,
-    y = 0,
-    alpha = 1,
+    y = tb.y + tb.paddingTop - 2,
+    color = properties.cursorColor or {0.25, 0.25, 0.25, 1},
     alphaTimer = 0,
     position = len(tb.text)
   }
+
+  tb.offsetX = tb.x + tb.offset + tb.paddingLeft
 
   return setmetatable(tb, textbox)
 end
 
 function textbox:update(dt)
+  local cursor = self.cursor
+
   if(self.focus) then
-    self.cursor.alphaTimer = self.cursor.alphaTimer + dt
-    self.cursor.alpha = 1 * cos(7 * self.cursor.alphaTimer) + 1
+    cursor.alphaTimer = cursor.alphaTimer + dt
+    cursor.color[4] = 1 * cos(7 * cursor.alphaTimer) + 1
   else
     self.cursor.alphaTimer = 0
   end
+
+  if(cursor.position == len(self.text)) then -- Cursor is at the end
+    self.offset = self.width - self.font:getWidth(self.text) - self.characterWidth
+  elseif(cursor.position > 0) then -- Cursor is inbetween
+    self.offset = self.width - self.font:getWidth(sub(self.text, 1, cursor.position)) - self.characterWidth
+  else
+    self.offset = 0
+  end
+
+  self.offsetX = self.x + min(self.offset, 0) + self.paddingLeft
+  cursor.x = self.offsetX + self.font:getWidth(sub(self.text, 1, cursor.position)) - 2
 end
 
 function textbox:draw()
@@ -59,15 +80,18 @@ function textbox:draw()
 
   lg.setFont(self.font)
   lg.setColor(self.textColor)
-  lg.print(self.text, self.x, self.y)
+
+  lg.setScissor(self.x, self.y, self.width, self.height)
+  lg.print(self.text, self.offsetX, self.y + self.paddingTop)
+  lg.setScissor()
 
   if(self.focus) then
+    lg.setColor(self.cursor.color)
+    lg.print("|", self.cursor.x, self.cursor.y)
+
     lg.setColor(self.borderColor)
     lg.setLineWidth(self.borderWeight)
     lg.rectangle("line", self.x, self.y, self.width, self.height)
-
-    lg.setColor(0, 0, 0, self.cursor.alpha)
-    lg.print("|", self.x + self.font:getWidth(sub(self.text, 1, self.cursor.position)) - 2, self.y)
   end
 
   lg.pop()
@@ -75,6 +99,7 @@ end
 
 function textbox:getInput(key)
   if(not self.focus) then return end
+  if(len(self.text) >= self.maxinput) then return end
 
   local cursor = self.cursor
 
@@ -104,7 +129,11 @@ function textbox:mousepressed(x, y, button)
   self.focus = intersects(self, x, y)
 
   if(self.focus) then
-    self.cursor.position = map(x, self.x, self.x + self.font:getWidth(self.text), 0, len(self.text))
+    local minX = self.offsetX
+    local maxX = self.offsetX + self.font:getWidth(self.text)
+    local normalize = map(x, minX, maxX, 0, len(self.text))
+
+    self.cursor.position = max(min(floor(normalize), len(self.text)), 0)
   end
 end
 
@@ -127,15 +156,10 @@ function textbox:keypressed(key)
   end
 
   if(key == "left") then
-    cursor.position = cursor.position - 1
+    cursor.position = max(cursor.position - 1, 0)
   elseif(key == "right") then
-    cursor.position = cursor.position + 1
+    cursor.position = min(cursor.position + 1, len(self.text))
   end
-
-  local textLength = len(self.text)
-
-  cursor.position = (cursor.position > textLength) and textLength or cursor.position
-  cursor.position = (cursor.position < 0) and 0 or cursor.position
 end
 
 function textbox:getText()
