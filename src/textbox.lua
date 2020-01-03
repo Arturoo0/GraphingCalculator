@@ -1,5 +1,6 @@
 -- Author: Bruce Berrios
 -- Description: A textbox class for user input
+
 local utf8 = require("utf8")
 
 local lg = love.graphics
@@ -66,20 +67,47 @@ function textbox:draw()
 end
 
 function textbox:getInput(key)
-  if(self.focus) then
-    self.text = self.text .. key
-    self.cursor.position = self.cursor.position + 1
-  end
+  if(not self.focus) then return end
+
+  local cursor = self.cursor
+
+  local textBefore = sub(self.text, 1, cursor.position)
+  local textAfter = sub(self.text, cursor.position + 1, len(self.text))
+
+  self.text = textBefore .. key .. textAfter
+
+  cursor.position = cursor.position + 1
 end
 
 function textbox:keypressed(key)
+  if(not self.focus) then return end
+
+  local cursor = self.cursor
+
   if(key == "backspace") then
-    local byteoffset = utf8.offset(self.text, -1)
+    local textBefore, textAfter
+    textBefore = sub(self.text, 1, cursor.position)
+    textAfter = sub(self.text, cursor.position + 1, len(self.text))
+
+    local byteoffset = utf8.offset(textBefore, -1)
+
     if (byteoffset) then
-      self.text = sub(self.text, 1, byteoffset - 1)
-      self.cursor.position = self.cursor.position - 1
+      textBefore = sub(textBefore, 1, byteoffset - 1)
+      self.text = textBefore .. textAfter
+      cursor.position = cursor.position - 1
     end
   end
+
+  if(key == "left") then
+    cursor.position = cursor.position - 1
+  elseif(key == "right") then
+    cursor.position = cursor.position + 1
+  end
+
+  local textLength = len(self.text)
+
+  cursor.position = (cursor.position > textLength) and textLength or cursor.position
+  cursor.position = (cursor.position < 0) and 0 or cursor.position
 end
 
 function textbox:getText()

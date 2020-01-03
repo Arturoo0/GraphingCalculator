@@ -93,6 +93,7 @@ local textbox = require("src/textbox")
 
 local myTB = textbox:new{
   y = 150,
+  x = 150,
   font = love.graphics.newFont(32)
 }
 
@@ -104,14 +105,14 @@ function love.update(dt)
   myTB:update(dt)
 end
 
+function love.draw()
+  myTB:draw()
+end
+
 function love.textinput(key)
   myTB:getInput(key)
 end
 
 function love.keypressed(key)
   myTB:keypressed(key)
-end
-
-function love.draw()
-  myTB:draw()
 end
