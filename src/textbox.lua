@@ -28,7 +28,7 @@ function textbox:new(properties)
     maxinput = properties.maxinput or 140,
   }
 
-  tb.characterWidth = tb.font:getWidth("W|")
+  tb.maxCharacterWidth = tb.font:getWidth("W|")
   tb.fontHeight = tb.font:getHeight()
 
   tb.width = properties.width or tb.font:getWidth(tb.text) * 2
@@ -60,16 +60,25 @@ function textbox:update(dt)
     self.cursor.alphaTimer = 0
   end
 
-  if(cursor.position == len(self.text)) then -- Cursor is at the end
-    self.offset = self.width - self.font:getWidth(self.text) - self.characterWidth
-  elseif(cursor.position > 0) then -- Cursor is inbetween
-    self.offset = self.width - self.font:getWidth(sub(self.text, 1, cursor.position)) - self.characterWidth
+  if(cursor.position == len(self.text)) then
+    self.offset = self.width - self.font:getWidth(self.text) - self.maxCharacterWidth
+  elseif(cursor.position > 0) then
+    local widthBefore = self.font:getWidth(sub(self.text, 1, cursor.position))
+    local newSubText
+
+    if(self.x > self.offsetX + widthBefore - self.maxCharacterWidth) then
+      newSubText = sub(self.text, 1, cursor.position - 1)
+      self.offset = -self.font:getWidth(newSubText) + self.maxCharacterWidth
+    elseif(self.x + self.width < self.offsetX + widthBefore + self.maxCharacterWidth) then
+      newSubText = sub(self.text, 1, cursor.position + 1)
+      self.offset = self.width - self.font:getWidth(newSubText) - self.maxCharacterWidth
+    end
   else
     self.offset = 0
   end
 
   self.offsetX = self.x + min(self.offset, 0) + self.paddingLeft
-  cursor.x = self.offsetX + self.font:getWidth(sub(self.text, 1, cursor.position)) - 2
+  cursor.x = self.offsetX + self.font:getWidth(sub(self.text, 1, cursor.position)) - 4
 end
 
 function textbox:draw()
