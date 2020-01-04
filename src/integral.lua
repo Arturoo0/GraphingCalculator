@@ -1,4 +1,7 @@
 
+--author: Arturo Portelles
+-- Integration
+
 local equation = require "src/equation"
 lg = love.graphics
 
