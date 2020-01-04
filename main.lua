@@ -9,8 +9,9 @@ color = require("src/color")
 local panel = require("src/panel")
 local grid = require("src/grid")
 local camera = require("src/camera")
+local equation = require("src/equation")
 
-local graphCanvas = lg.newCanvas(grid.width, grid.height)
+local cosine;
 
 function love.load()
 
@@ -44,25 +45,15 @@ function love.load()
     maxY = grid.height - HEIGHT
   }
 
+  cosine = equation:new {
+    color = color:get("orange-light"),
+    grid = grid,
+    func = function(x)
+      return math.cos(x)
+    end
+  }
+
   color:setBackground("white-light")
-
-  local coords = {}
-
-  local function func(x)
-    return math.sin(x + 2)
-  end
-
-  for x = -50, 50, 0.001 do
-    coords[#coords + 1] = ((grid.tileSize / 2) * x) + grid.halfWidth
-    coords[#coords + 1] = -((grid.tileSize / 2) * func(x)) + grid.halfHeight
-  end
-
-  graphCanvas:renderTo(function()
-    lg.clear()
-    lg.setPointSize(4)
-    color:set("purple-dark")
-    lg.points(coords)
-  end)
 end
 
 function love.update(dt)
@@ -74,13 +65,9 @@ local coords = {}
 
 function love.draw()
   camera:set()
+
   grid:draw()
-
-  color:set("white-light")
-
-  lg.setBlendMode("alpha", "premultiplied")
-  lg.draw(graphCanvas)
-  lg.setBlendMode("alpha")
+  cosine:draw()
 
   camera:unset()
 
@@ -91,5 +78,5 @@ function love.draw()
 end
 
 function love.mousereleased(x, y, button)
-  panel:mousereleased(x,y,button)
+  panel:mousereleased(x, y, button)
 end
