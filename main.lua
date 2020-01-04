@@ -1,4 +1,6 @@
 
+require "src/panel"
+
 local lg = love.graphics
 
 WIDTH = lg:getWidth()
@@ -49,7 +51,7 @@ function love.load()
   local coords = {}
 
   local function func(x)
-    return x^3
+    return math.sin(x + 2)
   end
 
   for x = -50, 50, 0.001 do
@@ -59,7 +61,7 @@ function love.load()
 
   graphCanvas:renderTo(function()
     lg.clear()
-    lg.setPointSize(6)
+    lg.setPointSize(4)
     color:set("purple-dark")
     lg.points(coords)
   end)
@@ -67,13 +69,13 @@ end
 
 function love.update(dt)
   camera:update(dt)
+  panel:draw()
 end
 
 local coords = {}
 
 function love.draw()
   camera:set()
-
   grid:draw()
 
   color:set("white-light")
@@ -84,6 +86,12 @@ function love.draw()
 
   camera:unset()
 
+  panel:draw()
+
   color:set("black-dark")
-  lg.print(love.timer.getFPS())
+  lg.print(love.timer.getFPS(), 676)
+end
+
+function love.mousereleased(x, y, button)
+  panel:mousereleased(x,y,button)
 end
