@@ -4,15 +4,15 @@
 
 local lg = love.graphics
 
-panel = {
+local panel = {
+  x = 0,
+  y = 0,
   width = 300,
   height = 600,
   status = false,
   buttonSize = 20,
   buttonX = 5,
   buttonY = 5,
-  X = 0,
-  Y = 0
 }
 
 function panel:mousereleased(x,y,button)
@@ -27,8 +27,8 @@ function panel:mousereleased(x,y,button)
     end
   end
 
-  Xcondition = ((x >= self.X and x <= (self.X + self.width)))
-  Ycondition = ((y >= self.Y and y <= (self.Y + self.height)))
+  Xcondition = ((x >= self.x and x <= (self.x + self.width)))
+  Ycondition = ((y >= self.y and y <= (self.y + self.height)))
 
   if (self.status == true) then
     if (not (Xcondition and Ycondition)) then
@@ -48,3 +48,5 @@ function panel:draw()
   end
 
 end
+
+return panel

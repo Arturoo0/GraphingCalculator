@@ -1,6 +1,3 @@
-
-require "src/panel"
-
 local lg = love.graphics
 
 WIDTH = lg:getWidth()
@@ -9,6 +6,7 @@ HALF_WIDTH = WIDTH * 0.5
 HALF_HEIGHT = HEIGHT * 0.5
 
 color = require("src/color")
+local panel = require("src/panel")
 local grid = require("src/grid")
 local camera = require("src/camera")
 
