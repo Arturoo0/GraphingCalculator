@@ -35,7 +35,6 @@ function panel:mousereleased(x,y,button)
       self.status = false
     end
   end
-
 end
 
 function panel:draw()
