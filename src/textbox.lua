@@ -21,7 +21,9 @@ function textbox:new(properties)
     font = properties.font or lg:getFont(),
     backgroundColor = properties.backgroundColor or {1, 1, 1, 1},
     textColor = properties.textColor or {0, 0, 0, 1},
-    borderColor = properties.borderColor or {0, 0.75, 1, 0.5},
+    focusBorderColor = properties.focusBorderColor or {0, 0.75, 1, 0.5},
+    focusBorderWeight = properties.focusBorderWeight or 3,
+    borderColor = properties.borderColor or {0.25, 0.25, 0.25, 0.25},
     borderWeight = properties.borderWeight or 3,
     focus = false,
     offset = 0,
@@ -98,6 +100,10 @@ function textbox:draw()
     lg.setColor(self.cursor.color)
     lg.print("|", self.cursor.x, self.cursor.y)
 
+    lg.setColor(self.focusBorderColor)
+    lg.setLineWidth(self.focusBorderWeight)
+    lg.rectangle("line", self.x, self.y, self.width, self.height)
+  else
     lg.setColor(self.borderColor)
     lg.setLineWidth(self.borderWeight)
     lg.rectangle("line", self.x, self.y, self.width, self.height)
