@@ -1,9 +1,9 @@
 local lg = love.graphics
 
-WIDTH = lg:getWidth()
-HEIGHT = lg:getHeight()
-HALF_WIDTH = WIDTH * 0.5
-HALF_HEIGHT = HEIGHT * 0.5
+local WIDTH = lg:getWidth()
+local HEIGHT = lg:getHeight()
+local HALF_WIDTH = WIDTH * 0.5
+local HALF_HEIGHT = HEIGHT * 0.5
 
 color = require("src/color")
 local panel = require("src/panel")
@@ -14,27 +14,11 @@ local equation = require("src/equation")
 local cosine;
 
 function love.load()
+  love.keyboard.setKeyRepeat(true)
 
-  color:init {
-    ["black-light"] = "#353b48",
-    ["black-dark"] = "#2f3640",
-    ["green-light"] = "#2ecc71",
-    ["green-dark"] = "#27ae60",
-    ["blue-light"] = "#3498db",
-    ["blue-dark"] = "#2980b9",
-    ["yellow-light"] = "#f1c40f",
-    ["yellow-dark"] = "#f39c12",
-    ["orange-light"] = "#e67e22",
-    ["orange-dark"] = "#d35400",
-    ["red-light"] = "#e74c3c",
-    ["red-dark"] = "#c0392b",
-    ["purple-light"] = "#9b59b6",
-    ["purple-dark"] = "#8e44ad",
-    ["white-light"] = "#ecf0f1",
-    ["white-dark"] = "#bdc3c7",
-    ["turquoise-light"] = "#1abc9c",
-    ["turquoise-dark"] = "#16a085"
-  }
+  panel:load()
+
+  color:init(require("src/colors"))
 
   camera:setPosition(grid.halfWidth - HALF_WIDTH, grid.halfHeight - HALF_HEIGHT)
 
@@ -57,8 +41,10 @@ function love.load()
 end
 
 function love.update(dt)
-  camera:update(dt)
-  panel:draw()
+  if(not panel.status) then
+    camera:update(dt)
+  end
+  panel:update(dt)
 end
 
 local coords = {}
@@ -79,4 +65,16 @@ end
 
 function love.mousereleased(x, y, button)
   panel:mousereleased(x, y, button)
+end
+
+function love.mousepressed(x, y, button)
+  panel:mousepressed(x, y, button)
+end
+
+function love.keypressed(key)
+  panel:keypressed(key)
+end
+
+function love.textinput(key)
+  panel:textinput(key)
 end
