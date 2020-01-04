@@ -7,7 +7,7 @@ HALF_HEIGHT = HEIGHT * 0.5
 
 color = require("src/color")
 local panel = require("src/panel")
-local grid = require("src/grid")
+grid = require("src/grid")
 local camera = require("src/camera")
 local equation = require("src/equation")
 
@@ -34,6 +34,8 @@ function love.load()
     ["white-dark"] = "#bdc3c7",
     ["turquoise-light"] = "#1abc9c",
     ["turquoise-dark"] = "#16a085"
+
+
   }
 
   camera:setPosition(grid.halfWidth - HALF_WIDTH, grid.halfHeight - HALF_HEIGHT)
@@ -54,7 +56,9 @@ function love.load()
   }
 
   color:setBackground("white-light")
+  require "src/integral"
 end
+
 
 function love.update(dt)
   camera:update(dt)
@@ -67,7 +71,8 @@ function love.draw()
   camera:set()
 
   grid:draw()
-  cosine:draw()
+  --cosine:draw()
+  draw()
 
   camera:unset()
 
