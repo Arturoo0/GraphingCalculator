@@ -38,4 +38,8 @@ function equation:draw()
   lg.setBlendMode("alpha")
 end
 
+function equation:getCoords()
+  return self.coords
+end
+
 return equation
