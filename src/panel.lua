@@ -1,6 +1,6 @@
-
 -- Author: Arturo Portelles
 -- Pop up panel
+
 local textbox = require("src/textbox")
 
 local lg = love.graphics
