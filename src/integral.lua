@@ -43,7 +43,7 @@ end
 function draw()
   eq:draw()
 
-  for i = 1, 200000, 4 do
+  for i = 1, 200000, 800 do
     if(coords[i + 1] >= 0) then
       lg.rectangle("line", coords[i], grid.halfHeight, coords[i + 4] - coords[i], -(875) - (-coords[i + 1]))
     end
