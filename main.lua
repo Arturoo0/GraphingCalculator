@@ -7,7 +7,7 @@ local HALF_HEIGHT = HEIGHT * 0.5
 
 color = require("src/color")
 local panel = require("src/panel")
-grid = require("src/grid")
+local grid = require("src/grid")
 local camera = require("src/camera")
 local equation = require("src/equation")
 
@@ -38,7 +38,6 @@ function love.load()
   }
 
   color:setBackground("white-light")
-  require "src/integral"
 end
 
 
@@ -55,8 +54,7 @@ function love.draw()
   camera:set()
 
   grid:draw()
-  --cosine:draw()
-  draw()
+  cosine:draw()
 
   camera:unset()
 
