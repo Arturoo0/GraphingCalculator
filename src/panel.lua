@@ -2,6 +2,7 @@
 -- Pop up panel
 
 local textbox = require("src/textbox")
+local equation = require("src/equation")
 
 local lg = love.graphics
 
@@ -15,6 +16,7 @@ local panel = {
   buttonX = 5,
   buttonY = 5,
   textboxes = {},
+  equations = {}
 }
 
 function panel:load()
@@ -25,6 +27,10 @@ function panel:load()
       y = (i - 1) * 100,
       font = lg.newFont(32)
     }
+  end
+
+  for i = 1, 3 do
+    self.equations[i] = equation:new()
   end
 end
 

@@ -6,17 +6,17 @@ local HALF_WIDTH = WIDTH * 0.5
 local HALF_HEIGHT = HEIGHT * 0.5
 
 color = require("src/color")
-local panel = require("src/panel")
-local grid = require("src/grid")
-local camera = require("src/camera")
-local equation = require("src/equation")
 
-local cosine;
+panel = require("src/panel")
+local grid = require("src/grid")
+
+local camera = require("src/camera")
 
 function love.load()
   love.keyboard.setKeyRepeat(true)
 
   panel:load()
+  grid:load()
 
   color:init(require("src/colors"))
 
@@ -27,14 +27,6 @@ function love.load()
     minY = 0,
     maxX = grid.width - WIDTH,
     maxY = grid.height - HEIGHT
-  }
-
-  cosine = equation:new {
-    color = color:get("orange-light"),
-    grid = grid,
-    func = function(x)
-      return math.cos(x)
-    end
   }
 
   color:setBackground("white-light")
@@ -54,7 +46,6 @@ function love.draw()
   camera:set()
 
   grid:draw()
-  cosine:draw()
 
   camera:unset()
 

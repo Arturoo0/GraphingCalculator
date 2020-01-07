@@ -1,7 +1,6 @@
 
 -- Author : Arturo Portelles
 -- Grid layout and scale
-
 local lg = love.graphics
 
 local grid = {
@@ -11,8 +10,28 @@ local grid = {
   halfWidth = 875,
   halfHeight = 875,
   tiles = 50,
-  scale = 10
+  scale = 10,
+  canvas = nil,
 }
+
+function grid:load()
+  self.canvas = lg.newCanvas(self.width, self.height)
+  self:render()
+end
+
+function grid:render()
+  self.canvas:renderTo(function()
+    lg.clear()
+    lg.setPointSize(3)
+
+    for _,v in ipairs(panel.equations) do
+      local points, color = v:getRenderComponents()
+      lg.setColor(color)
+      lg.points(points)
+    end
+
+  end)
+end
 
 function grid:draw()
 
@@ -84,6 +103,11 @@ function grid:draw()
   lg.setLineWidth(5)
   lg.line(0, self.halfHeight, self.width, self.halfHeight)
   lg.line(self.halfWidth, 0, self.halfWidth, self.height)
+
+  lg.setColor(1, 1, 1, 1)
+  lg.setBlendMode("alpha", "premultiplied")
+  lg.draw(self.canvas)
+  lg.setBlendMode("alpha")
 
 end
 
