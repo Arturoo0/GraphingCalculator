@@ -47,27 +47,24 @@ function textbox:new(properties)
     position = len(tb.text)
   }
 
+  tb.textLen = tb.cursor.position
+
   tb.offsetX = tb.x + tb.offset + tb.paddingLeft
 
   return setmetatable(tb, textbox)
 end
 
 function textbox:update(dt)
+  if(not self.focus) then return end
+
   local cursor = self.cursor
 
-  if(self.focus) then
-    cursor.alphaTimer = cursor.alphaTimer + dt
-    cursor.color[4] = 1 * cos(7 * cursor.alphaTimer) + 1
-  else
-    self.cursor.alphaTimer = 0
-  end
+  cursor.alphaTimer = cursor.alphaTimer + dt
+  cursor.color[4] = 1 * cos(7 * cursor.alphaTimer) + 1
 
-  if(cursor.position == len(self.text)) then
-    self.offset = self.width - self.font:getWidth(self.text) - self.maxCharacterWidth
-  elseif(cursor.position > 0) then
+  if(cursor.position > 0) then
     local widthBefore = self.font:getWidth(sub(self.text, 1, cursor.position))
     local newSubText
-
     if(self.x > self.offsetX + widthBefore - self.maxCharacterWidth) then
       newSubText = sub(self.text, 1, cursor.position - 1)
       self.offset = -self.font:getWidth(newSubText) + self.maxCharacterWidth
@@ -114,14 +111,16 @@ end
 
 function textbox:getInput(key)
   if(not self.focus) then return end
-  if(len(self.text) >= self.maxinput) then return end
+
+  if(self.textLen >= self.maxinput) then return end
 
   local cursor = self.cursor
 
   local textBefore = sub(self.text, 1, cursor.position)
-  local textAfter = sub(self.text, cursor.position + 1, len(self.text))
+  local textAfter = sub(self.text, cursor.position + 1, self.textLen)
 
   self.text = concat{textBefore, key, textAfter}
+  self.textLen = len(self.text)
 
   cursor.position = cursor.position + 1
 end
@@ -146,9 +145,10 @@ function textbox:mousepressed(x, y, button)
   if(self.focus) then
     local minX = self.offsetX
     local maxX = self.offsetX + self.font:getWidth(self.text)
-    local normalize = map(x, minX, maxX, 0, len(self.text))
+    local normalize = map(x, minX, maxX, 0, self.textLen)
 
-    self.cursor.position = max(min(floor(normalize), len(self.text)), 0)
+    self.cursor.alphaTimer = 0
+    self.cursor.position = max(min(floor(normalize), self.textLen), 0)
   end
 end
 
@@ -159,13 +159,14 @@ function textbox:keypressed(key)
 
   if(key == "backspace") then
     local textBefore = sub(self.text, 1, cursor.position)
-    local textAfter = sub(self.text, cursor.position + 1, len(self.text))
+    local textAfter = sub(self.text, cursor.position + 1, self.textLen)
 
     local byteoffset = offset(textBefore, -1)
 
     if (byteoffset) then
       textBefore = sub(textBefore, 1, byteoffset - 1)
       self.text = concat{textBefore, textAfter}
+      self.textLen = len(self.text)
       cursor.position = cursor.position - 1
     end
   end
@@ -173,7 +174,7 @@ function textbox:keypressed(key)
   if(key == "left") then
     cursor.position = max(cursor.position - 1, 0)
   elseif(key == "right") then
-    cursor.position = min(cursor.position + 1, len(self.text))
+    cursor.position = min(cursor.position + 1, self.textLen)
   end
 end
 
