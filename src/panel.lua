@@ -14,10 +14,10 @@ local panel = {
   numInputs = 7,
   status = false,
   button = {
-    x = 5,
-    y = 5,
-    width = 20,
-    height = 20,
+    x = 10,
+    y = 10,
+    width = 25,
+    height = 25,
   },
   textboxes = {},
   equations = {},
@@ -34,6 +34,15 @@ function panel:load()
     }
     self.equations[i] = equation:new()
   end
+
+  self.button.icon = {}
+
+  local icon = self.button.icon
+
+  icon.img = lg.newImage("img/open.png")
+  icon.scaleX = self.button.width / icon.img:getWidth()
+  icon.scaleY = self.button.height / icon.img:getHeight()
+
 end
 
 function panel:update(dt)
@@ -55,7 +64,7 @@ function panel:draw()
     end
   else
     color:set("black-light")
-    lg.rectangle("fill", button.x, button.y, button.width, button.height)
+    lg.draw(button.icon.img, button.x, button.y, 0, button.icon.scaleX, button.icon.scaleY)
   end
 end
 
