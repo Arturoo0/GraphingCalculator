@@ -25,7 +25,8 @@ function panel:load()
       width = self.width,
       height = 100,
       y = (i - 1) * 100,
-      font = lg.newFont(32)
+      text = "y = ",
+      font = lg.newFont(24)
     }
   end
 
