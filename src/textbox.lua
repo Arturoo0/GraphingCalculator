@@ -51,7 +51,7 @@ function textbox:new(properties)
 
   tb.offsetX = tb.x + tb.offset + tb.paddingLeft
 
-  return setmetatable(tb, textbox)
+  return setmetatable(tb, self)
 end
 
 function textbox:update(dt)
@@ -76,7 +76,7 @@ function textbox:update(dt)
     self.offset = 0
   end
 
-  self.offsetX = self.x + min(self.offset, 0) + self.paddingLeft
+  self.offsetX = self.x + self.paddingLeft + min(self.offset, 0)
   cursor.x = self.offsetX + self.font:getWidth(sub(self.text, 1, cursor.position)) - 4
 end
 
@@ -140,6 +140,7 @@ end
 function textbox:mousepressed(x, y, button)
   if(button ~= 1) then return end
 
+  local oldFocus = self.focus
   self.focus = intersects(self, x, y)
 
   if(self.focus) then
@@ -147,8 +148,8 @@ function textbox:mousepressed(x, y, button)
     local maxX = self.offsetX + self.font:getWidth(self.text)
     local normalize = map(x, minX, maxX, 0, self.textLen)
 
-    self.cursor.alphaTimer = 0
     self.cursor.position = max(min(floor(normalize), self.textLen), 0)
+    self.cursor.alphaTimer = ((not oldFocus) and 0) or self.cursor.alphaTimer
   end
 end
 
