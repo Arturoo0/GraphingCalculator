@@ -4,7 +4,7 @@ local environment = require("src/functions")
 
 local parser = {}
 
-local tagTable = {"return function(x) return", "" , " end"}
+local tagTable = {"return function(x) return ", "" , " end"}
 local concat = table.concat
 local strLen = string.len
 
