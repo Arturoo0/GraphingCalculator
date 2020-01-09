@@ -31,7 +31,7 @@ function panel:load()
       height = 100,
       y = (i - 1) * 100,
       text = "y = ",
-      font = lg.newFont(24)
+      font = lg.newFont(18)
     }
     self.equations[i] = equation:new()
   end
