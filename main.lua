@@ -7,7 +7,7 @@ local HALF_HEIGHT = HEIGHT * 0.5
 
 color = require("src/color")
 
-panel = require("src/panel")
+local panel = require("src/panel")
 local grid = require("src/grid")
 
 local camera = require("src/camera")
@@ -16,7 +16,7 @@ function love.load()
   love.keyboard.setKeyRepeat(true)
 
   panel:load()
-  grid:load()
+  grid:load(panel:getEquations())
 
   color:init(require("src/colors"))
 

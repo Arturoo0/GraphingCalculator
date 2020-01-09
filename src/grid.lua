@@ -14,17 +14,17 @@ local grid = {
   canvas = nil,
 }
 
-function grid:load()
+function grid:load(equations)
   self.canvas = lg.newCanvas(self.width, self.height)
-  self:render()
+  self:render(equations)
 end
 
-function grid:render()
+function grid:render(equations)
   self.canvas:renderTo(function()
     lg.clear()
     lg.setPointSize(3)
 
-    for _,v in ipairs(panel.equations) do
+    for _,v in ipairs(equations) do
       local points, color = v:getRenderComponents()
       lg.setColor(color)
       lg.points(points)

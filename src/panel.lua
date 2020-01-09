@@ -108,4 +108,8 @@ function panel:mousereleased(x, y, button)
   self.status = intersects(x, y, target)
 end
 
+function panel:getEquations()
+  return self.equations
+end
+
 return panel
