@@ -1,23 +1,23 @@
 
--- func = require("src/panel")
---
--- setfenv({
---
---   local abs = math.abs,
---   local acos = math.acos,
---   local asin = math.asin,
---   local atan = math.atan,
---   local ceil = math.ceil,
---   local cos = math.cos,
---   local deg = math.deg,
---   local exp = math.exp,
---   local floor = math.floor,
---   local fmod = math.fmod,
---   local log = math.log,
---   local pi = math.pi,
---   local rad = math.rad,
---   local sin = math.sin,
---   local sqrt = math.sqrt,
---   local tan = math.tan,
---
--- })
+local environment = {
+  abs = math.abs,
+  acos = math.acos,
+  asin = math.asin,
+  atan = math.atan,
+  ceil = math.ceil,
+  cos = math.cos,
+  deg = math.deg,
+  exp = math.exp,
+  floor = math.floor,
+  fmod = math.fmod,
+  log = math.log,
+  pi = math.pi,
+  rad = math.rad,
+  sin = math.sin,
+  sqrt = math.sqrt,
+  tan = math.tan,
+  max = math.max,
+  min = math.min
+}
+
+return environment
