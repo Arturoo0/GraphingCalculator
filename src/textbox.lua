@@ -125,7 +125,7 @@ function textbox:getInput(key)
   cursor.position = cursor.position + 1
 end
 
-local function intersects(box, x, y)
+local function intersects(x, y, box)
   local intersectsX = (x >= box.x and x <= box.x + box.width)
   local intersectsY = (y >= box.y and y <= box.y + box.height)
 
@@ -141,7 +141,7 @@ function textbox:mousepressed(x, y, button)
   if(button ~= 1) then return end
 
   local oldFocus = self.focus
-  self.focus = intersects(self, x, y)
+  self.focus = intersects(x, y, self)
 
   if(self.focus) then
     local minX = self.offsetX
