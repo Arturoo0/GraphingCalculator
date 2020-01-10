@@ -3,6 +3,7 @@
 
 local textbox = require("src/textbox")
 local equation = require("src/equation")
+local parser = require("src/parser")
 
 local lg = love.graphics
 
@@ -30,7 +31,7 @@ function panel:load()
       height = 100,
       y = (i - 1) * 100,
       text = "y = ",
-      font = lg.newFont(24)
+      font = lg.newFont(18)
     }
     self.equations[i] = equation:new()
   end
@@ -105,6 +106,10 @@ function panel:mousereleased(x, y, button)
   local target = (self.status) and self or self.button
 
   self.status = intersects(x, y, target)
+end
+
+function panel:getEquations()
+  return self.equations
 end
 
 return panel
