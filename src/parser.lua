@@ -9,14 +9,13 @@ local concat = table.concat
 local strLen = string.len
 
 function parser.parse(funcStr)
+  if (strLen(funcStr) <= 2) then return false end
+
   local funcStr = funcStr:gsub("%s+", "")
   funcStr = funcStr:lower()
 
   local subStr = funcStr:sub(1,2)
-
-  if (strLen(funcStr) <= 2 and subStr ~= "y=") then
-    return false
-  end
+  if (subStr ~= "y=") then return false end
 
   funcStr = funcStr:sub(3)
 
