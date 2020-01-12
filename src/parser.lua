@@ -9,7 +9,6 @@ local concat = table.concat
 local strLen = string.len
 
 function parser.parse(funcStr)
-
   local funcStr = funcStr:gsub("%s+", "")
   funcStr = funcStr:lower()
 
@@ -19,9 +18,7 @@ function parser.parse(funcStr)
     return false
   end
 
-  if (subStr == "y=") then
-    funcStr = funcStr:sub(3)
-  end
+  funcStr = funcStr:sub(3)
 
   tagTable[2] = funcStr
   funcStr = concat(tagTable)
@@ -31,7 +28,7 @@ function parser.parse(funcStr)
 
   local returnFunc = funcStr()
 
-  if (pcall(returnFunc, 3) == false) then return false end
+  if (not pcall(returnFunc, 3)) then return false end
   if (type(returnFunc(3)) ~= "number") then return false end
 
   return returnFunc
