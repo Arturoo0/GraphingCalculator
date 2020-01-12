@@ -3,7 +3,7 @@
 
 local textbox = require("src/textbox")
 local equation = require("src/equation")
-local parser = require("src/parser")
+local parse = require("src/parse")
 
 local lg = love.graphics
 

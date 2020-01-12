@@ -1,14 +1,13 @@
 -- Author : Arturo Portelles
 -- Desc : string to equation func
-local environment = require("src/functions")
 
-local parser = {}
+local environment = require("src/functions")
 
 local tagTable = {"return function(x) return ", "" , " end"}
 local concat = table.concat
 local strLen = string.len
 
-function parser.parse(funcStr)
+local function parse(funcStr)
   if (strLen(funcStr) <= 2) then return false end
 
   local funcStr = funcStr:gsub("%s+", "")
@@ -33,4 +32,4 @@ function parser.parse(funcStr)
   return returnFunc
 end
 
-return parser
+return parse
