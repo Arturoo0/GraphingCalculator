@@ -28,8 +28,10 @@ local function parse(funcStr)
 
   local returnFunc = funcStr()
 
-  if (not pcall(returnFunc, 3)) then return false end
-  if (type(returnFunc(3)) ~= "number") then return false end
+  local success, result = pcall(returnFunc, 3)
+
+  if (not success) then return false end
+  if (type(result) ~= "number") then return false end
 
   return returnFunc
 end
