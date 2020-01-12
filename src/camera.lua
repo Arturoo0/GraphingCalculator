@@ -47,7 +47,6 @@ local function clamp(x, min, max)
 end
 
 function camera:control(dt)
-
   local wIsDown = lk.isDown("w")
   local aIsDown = lk.isDown("a")
   local sIsDown = lk.isDown("s")
@@ -57,11 +56,9 @@ function camera:control(dt)
   self.velY = (sIsDown) and self.speed or self.velY
   self.velX = (aIsDown) and -self.speed or 0
   self.velX = (dIsDown) and self.speed or self.velX
-
 end
 
 function camera:update(dt)
-
   local mouseX, mouseY = lm.getPosition()
 
   if(lm.isDown(1)) then
@@ -91,7 +88,6 @@ function camera:update(dt)
 
   self.x = clamp(self.x, self.boundaries.minX, self.boundaries.maxX)
   self.y = clamp(self.y, self.boundaries.minY, self.boundaries.maxY)
-
 end
 
 function camera:set()

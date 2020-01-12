@@ -43,7 +43,6 @@ function panel:load()
   icon.img = lg.newImage("img/open.png")
   icon.scaleX = self.button.width / icon.img:getWidth()
   icon.scaleY = self.button.height / icon.img:getHeight()
-
 end
 
 function panel:update(dt)

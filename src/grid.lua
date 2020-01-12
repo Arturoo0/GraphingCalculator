@@ -36,7 +36,6 @@ function grid:render(equations)
 end
 
 function grid:draw()
-
   color:set("black-dark", 0.35)
 
   local currentX = 0
@@ -110,7 +109,6 @@ function grid:draw()
   lg.setBlendMode("alpha", "premultiplied")
   lg.draw(self.canvas)
   lg.setBlendMode("alpha")
-
 end
 
 return grid

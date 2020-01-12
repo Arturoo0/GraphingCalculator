@@ -9,7 +9,6 @@ local equation = {}
 equation.__index = equation
 
 function equation:new(properties)
-
   local properties = properties or {}
 
   local eq = {
