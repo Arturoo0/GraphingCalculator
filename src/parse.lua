@@ -1,7 +1,7 @@
 -- Author : Arturo Portelles
 -- Desc : string to equation func
 
-local environment = require("src/functions")
+local environment = require("src/function")
 
 local tagTable = {"return function(x) return ", "" , " end"}
 local concat = table.concat
