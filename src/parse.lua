@@ -22,6 +22,8 @@ local function parse(funcStr)
   funcStr = concat(tagTable)
 
   funcStr = loadstring(funcStr)
+  if(not funcStr) then return false end
+
   setfenv(funcStr, environment)
 
   local returnFunc = funcStr()
