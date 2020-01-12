@@ -14,8 +14,9 @@ function equation:new(properties)
 
   local eq = {
     coords = {},
-    func = properties.func or function(x) return x^2 end,
-    color = properties.color or {1, 0, 0, 1}
+    func = properties.func or function(x) return x end,
+    color = properties.color or {1, 0, 0, 1},
+    valid = false,
   }
 
   for x = -50, 50, 0.001 do
@@ -32,6 +33,10 @@ end
 
 function equation:getRenderComponents()
   return self.coords, self.color
+end
+
+function equation:isValid()
+  return self.valid
 end
 
 return equation

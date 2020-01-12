@@ -24,10 +24,12 @@ function grid:render(equations)
     lg.clear()
     lg.setPointSize(3)
 
-    for _,v in ipairs(equations) do
-      local points, color = v:getRenderComponents()
-      lg.setColor(color)
-      lg.points(points)
+    for _, v in ipairs(equations) do
+      if(v:isValid()) then
+        local points, color = v:getRenderComponents()
+        lg.setColor(color)
+        lg.points(points)
+      end
     end
 
   end)
