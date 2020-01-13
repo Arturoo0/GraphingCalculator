@@ -3,7 +3,7 @@
 
 local textbox = require("src/textbox")
 local equation = require("src/equation")
-local parser = require("src/parser")
+local parse = require("src/parse")
 
 local lg = love.graphics
 
@@ -20,8 +20,11 @@ local panel = {
     width = 25,
     height = 25,
   },
+
   textboxes = {},
   equations = {},
+  previousInputs = {},
+  renderKeys = {},
 }
 
 function panel:load()
@@ -33,7 +36,9 @@ function panel:load()
       text = "y = ",
       font = lg.newFont(18)
     }
+    self.previousInputs[i] = self.textboxes[i]:getText()
     self.equations[i] = equation:new()
+    self.renderKeys[i] = false
   end
 
   self.button.icon = {}
@@ -43,14 +48,50 @@ function panel:load()
   icon.img = lg.newImage("img/open.png")
   icon.scaleX = self.button.width / icon.img:getWidth()
   icon.scaleY = self.button.height / icon.img:getHeight()
-
 end
 
 function panel:update(dt)
   if(not self.status) then return end
 
+  local needRender = false
+
   for i = 1, self.numInputs do
     self.textboxes[i]:update(dt)
+
+    local textboxInput = self.textboxes[i]:getText()
+
+    if (textboxInput ~= self.previousInputs[i]) then
+      needRender = true
+      self.renderKeys[i] = true
+    end
+  end
+
+  if(needRender) then
+    self:renderToGrid()
+  end
+end
+
+function panel:renderToGrid()
+  local callRender = false
+
+  for i, v in ipairs(self.renderKeys) do
+    if(v) then
+      local textboxInput = self.textboxes[i]:getText()
+      local func = parse(textboxInput)
+
+      if(func) then
+        self.equations[i]:recomputeCoords(func)
+        self.previousInputs[i] = textboxInput
+        self.renderKeys[i] = false
+        callRender = true
+      else
+        self.equations[i].valid = false
+      end
+    end
+  end
+
+  if(callRender) then
+    grid:render(self.equations)
   end
 end
 

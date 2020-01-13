@@ -1,6 +1,6 @@
-
 -- Author : Arturo Portelles
 -- Grid layout and scale
+
 local lg = love.graphics
 
 local grid = {
@@ -24,17 +24,18 @@ function grid:render(equations)
     lg.clear()
     lg.setPointSize(3)
 
-    for _,v in ipairs(equations) do
-      local points, color = v:getRenderComponents()
-      lg.setColor(color)
-      lg.points(points)
+    for _, v in ipairs(equations) do
+      if(v:isValid()) then
+        local points, color = v:getRenderComponents()
+        lg.setColor(color)
+        lg.points(points)
+      end
     end
 
   end)
 end
 
 function grid:draw()
-
   color:set("black-dark", 0.35)
 
   local currentX = 0
@@ -108,7 +109,6 @@ function grid:draw()
   lg.setBlendMode("alpha", "premultiplied")
   lg.draw(self.canvas)
   lg.setBlendMode("alpha")
-
 end
 
 return grid
