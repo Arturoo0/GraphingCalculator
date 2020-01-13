@@ -64,8 +64,13 @@ function color:setBackground(key)
   lg.setBackgroundColor(self.colors[key])
 end
 
-function color:get(key)
-  return self.colors[key]
+function color:get(key, alpha)
+  a = alpha or 1
+
+  local c = self.colors[key]
+  c[4] = a
+
+  return c
 end
 
 return color
