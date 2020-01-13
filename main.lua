@@ -6,6 +6,7 @@ local HALF_WIDTH = WIDTH * 0.5
 local HALF_HEIGHT = HEIGHT * 0.5
 
 color = require("src/color")
+color:init(require("src/colors"))
 
 grid = require("src/grid")
 local panel = require("src/panel")
@@ -17,8 +18,6 @@ function love.load()
 
   panel:load()
   grid:load(panel:getEquations())
-
-  color:init(require("src/colors"))
 
   camera:setPosition(grid.halfWidth - HALF_WIDTH, grid.halfHeight - HALF_HEIGHT)
 

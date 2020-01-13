@@ -7,6 +7,16 @@ local parse = require("src/parse")
 
 local lg = love.graphics
 
+local EQUATION_COLORS = {
+  color:get("green-light"),
+  color:get("blue-light"),
+  color:get("yellow-light"),
+  color:get("orange-light"),
+  color:get("red-light"),
+  color:get("purple-light"),
+  color:get("turquoise-light")
+}
+
 local panel = {
   x = 0,
   y = 0,
@@ -37,7 +47,9 @@ function panel:load()
       font = lg.newFont(18)
     }
     self.previousInputs[i] = self.textboxes[i]:getText()
-    self.equations[i] = equation:new()
+    self.equations[i] = equation:new {
+      color = EQUATION_COLORS[i]
+    }
     self.renderKeys[i] = false
   end
 
