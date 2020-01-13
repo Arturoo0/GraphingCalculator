@@ -15,10 +15,10 @@ local camera = require("src/camera")
 function love.load()
   love.keyboard.setKeyRepeat(true)
 
+  color:init(require("src/colors"))
+
   panel:load()
   grid:load(panel:getEquations())
-
-  color:init(require("src/colors"))
 
   camera:setPosition(grid.halfWidth - HALF_WIDTH, grid.halfHeight - HALF_HEIGHT)
 
