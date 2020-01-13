@@ -40,6 +40,7 @@ local panel = {
   equations = {},
   previousInputs = {},
   renderKeys = {},
+  renderTimer = 0,
 }
 
 function panel:load()
@@ -72,7 +73,7 @@ end
 function panel:update(dt)
   if(not self.status) then return end
 
-  local needRender = false
+  local needValidation = false
 
   for i = 1, self.numInputs do
     self.textboxes[i]:update(dt)
@@ -80,19 +81,22 @@ function panel:update(dt)
     local textboxInput = self.textboxes[i]:getText()
 
     if (textboxInput ~= self.previousInputs[i]) then
-      needRender = true
+      needValidation = true
       self.renderKeys[i] = true
     end
   end
 
-  if(needRender) then
-    self:renderToGrid()
+  if(needValidation) then self:validateInput(dt) end
+
+  self.renderTimer = self.renderTimer + dt
+
+  if(self.renderTimer >= 0.5) then
+    grid:render(self.equations)
+    self.renderTimer = 0
   end
 end
 
-function panel:renderToGrid()
-  local callRender = false
-
+function panel:validateInput()
   for i, v in ipairs(self.renderKeys) do
     if(v) then
       local textboxInput = self.textboxes[i]:getText()
@@ -102,15 +106,10 @@ function panel:renderToGrid()
         self.equations[i]:recomputeCoords(func)
         self.previousInputs[i] = textboxInput
         self.renderKeys[i] = false
-        callRender = true
       else
         self.equations[i].valid = false
       end
     end
-  end
-
-  if(callRender) then
-    grid:render(self.equations)
   end
 end
 
