@@ -8,13 +8,18 @@ local parse = require("src/parse")
 local lg = love.graphics
 
 local EQUATION_COLORS = {
-  color:get("green-light"),
-  color:get("blue-light"),
-  color:get("yellow-light"),
-  color:get("orange-light"),
-  color:get("red-light"),
-  color:get("purple-light"),
-  color:get("turquoise-light")
+  "green-light",
+  "blue-light",
+  "yellow-light",
+  "orange-light",
+  "red-light",
+  "purple-light",
+  "turquoise-light"
+}
+
+local INPUT_BORDER_COLORS = {
+  [true] = "blue-light",
+  [false] = "red-light",
 }
 
 local panel = {
@@ -47,9 +52,11 @@ function panel:load()
       font = lg.newFont(18)
     }
     self.previousInputs[i] = self.textboxes[i]:getText()
+
     self.equations[i] = equation:new {
-      color = EQUATION_COLORS[i]
+      color = color:get(EQUATION_COLORS[i])
     }
+
     self.renderKeys[i] = false
   end
 
@@ -113,7 +120,13 @@ function panel:draw()
   if (self.status) then
     color:set("white-light")
     lg.rectangle("fill", 0, 0, self.width, self.height)
+
+    local isValid = false
+
     for i = 1, self.numInputs do
+      isValid = self.equations[i].valid
+      self.textboxes[i].focusBorderColor = color:get(INPUT_BORDER_COLORS[isValid])
+
       self.textboxes[i]:draw()
     end
   else
