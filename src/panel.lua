@@ -125,7 +125,7 @@ function panel:draw()
 
     for i = 1, self.numInputs do
       isValid = self.equations[i].valid
-      self.textboxes[i].focusBorderColor = color:get(INPUT_BORDER_COLORS[isValid])
+      self.textboxes[i].focusBorderColor = color:get(INPUT_BORDER_COLORS[isValid], 0.75)
 
       self.textboxes[i]:draw()
     end
