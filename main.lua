@@ -51,8 +51,8 @@ function love.draw()
 
   panel:draw()
 
-  color:set("black-dark")
-  lg.print(love.timer.getFPS(), 676)
+  -- color:set("black-dark")
+  -- lg.print(love.timer.getFPS(), 676)
 end
 
 function love.mousereleased(x, y, button)
