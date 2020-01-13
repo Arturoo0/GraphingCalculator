@@ -7,8 +7,8 @@ local HALF_HEIGHT = HEIGHT * 0.5
 
 color = require("src/color")
 
+grid = require("src/grid")
 local panel = require("src/panel")
-local grid = require("src/grid")
 
 local camera = require("src/camera")
 

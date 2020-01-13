@@ -1,4 +1,3 @@
-
 -- Author: Bruce Berrios
 -- Description: Utility to manage colors
 

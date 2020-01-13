@@ -1,6 +1,6 @@
-
 -- Author : Arturo Portelles
 -- Grid layout and scale
+
 local lg = love.graphics
 
 local grid = {
