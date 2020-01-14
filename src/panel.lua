@@ -95,6 +95,8 @@ function panel:update(dt)
     self.textboxes[i]:update(dt)
     self.checkboxes[i]:update(dt)
 
+    self.equations[i].showIntegral = self.checkboxes[i]:getValue()
+
     local textboxInput = self.textboxes[i]:getText()
 
     if (textboxInput ~= self.previousInputs[i]) then

@@ -30,12 +30,12 @@ function grid:render(equations)
         lg.setColor(color)
         lg.points(points)
 
-        drawIntegral(eq)
+        if(eq:drawIntegral()) then
+          drawIntegral(eq)
+        end
 
       end
-
     end
-
   end)
 end
 
