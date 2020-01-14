@@ -19,6 +19,7 @@ function equation:new(properties)
     func = properties.func or function(x) return x end,
     color = properties.color or {1, 0, 0, 1},
     valid = false,
+    showIntegral = false,
   }
 
   return setmetatable(eq, equation)
@@ -50,6 +51,10 @@ end
 
 function equation:isValid()
   return self.valid
+end
+
+function equation:drawIntegral()
+  return self.showIntegral
 end
 
 return equation
