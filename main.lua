@@ -18,7 +18,7 @@ function love.load()
   color:init(require("src/colors"))
 
   panel:load()
-  grid:load(panel:getEquations())
+  grid:load()
 
   camera:setPosition(grid.halfWidth - HALF_WIDTH, grid.halfHeight - HALF_HEIGHT)
 

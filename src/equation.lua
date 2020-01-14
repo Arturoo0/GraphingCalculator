@@ -5,7 +5,7 @@ local lg = love.graphics
 
 local grid = require("src/grid")
 
-local NUM_COORDS = 101000
+local NUM_COORDS = 200002
 local set = rawset
 
 local equation = {}

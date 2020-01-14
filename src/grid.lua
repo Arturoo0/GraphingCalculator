@@ -14,9 +14,8 @@ local grid = {
   canvas = nil,
 }
 
-function grid:load(equations)
+function grid:load()
   self.canvas = lg.newCanvas(self.width, self.height)
-  self:render(equations)
 end
 
 function grid:render(equations)
@@ -24,12 +23,12 @@ function grid:render(equations)
     lg.clear()
     lg.setPointSize(3)
 
-    for _, v in ipairs(equations) do
-      if(v:isValid()) then
-        local points, color = v:getRenderComponents()
+    for _, eq in ipairs(equations) do
+      if(eq:isValid()) then
+        local points, color = eq:getRenderComponents()
         lg.setColor(color)
         lg.points(points)
-        Integral(equations)
+        Integral(eq)
       end
 
     end

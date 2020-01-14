@@ -87,7 +87,7 @@ function panel:update(dt)
     end
   end
 
-  if(needValidation) then self:validateInput(dt) end
+  if(needValidation) then self:validateInput() end
 
   self.renderTimer = self.renderTimer + dt
 

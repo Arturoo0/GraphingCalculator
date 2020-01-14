@@ -20,7 +20,7 @@ local environment = {
   tan = math.tan,
   max = math.max,
   min = math.min,
-  Integral,
+  Integral = Integral,
 }
 
 return environment

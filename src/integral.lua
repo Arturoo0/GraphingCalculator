@@ -1,8 +1,8 @@
 
 --author: Arturo Portelles
 -- Integration
-
-lg = love.graphics
+local floor = math.floor
+local lg = love.graphics
 
 -- 100,000 points 25,000 boxes 50,000 coordinates
 
@@ -12,15 +12,15 @@ local function getTrueX(x)
 end
 
 local function getTrueY(y)
-  trueY = ((y - grid.halfHeight / -1) * 2) / grid.tileSize
+  trueY = ((y - grid.halfHeight) * -2) / grid.tileSize
   return trueY
 end
 
-local function computeIntegral(equation)
+local function computeIntegral(coords)
   sum = 0
 
-  for i = 1, 100000, 2 do
-    sum = sum + (getTrueX(equation.coords[i + 2]) - getTrueX(equation.coords[i])) * getTrueY(equation.coords[i + 1])
+  for i = 1, 200000, 2 do
+    sum = sum + (getTrueX(coords[i + 2]) - getTrueX(coords[i])) * getTrueY(coords[i + 1])
   end
 
   return sum
@@ -28,13 +28,15 @@ end
 
 function Integral(equation)
 
+  coords = equation:getCoords()
+
   for i = 1, 200000, 800 do
-    if(equation.coords[i + 1] >= 0) then
-      lg.rectangle("line", coords[i], grid.halfHeight, coords[i + 4] - coords[i], -(875) - (-coords[i + 1]))
-    end
+    --if((coords[i + 1]) >= 0) then
+      lg.rectangle("line", coords[i], grid.halfHeight, coords[i + 4] - coords[i], -(875) - (-(coords[i + 1])))
+    --end
   end
 
   lg.setColor(0,0,0)
-  lg.print(computeIntegral(equation), 875)
+  lg.print(floor(computeIntegral(coords) * 1000)/1000, 875)
 
 end
