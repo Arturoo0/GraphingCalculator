@@ -28,7 +28,9 @@ function grid:render(equations)
         local points, color = eq:getRenderComponents()
         lg.setColor(color)
         lg.points(points)
+
         Integral(eq)
+
       end
 
     end
