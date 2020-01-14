@@ -18,6 +18,7 @@ function checkbox:new(properties)
     borderColor = properties.borderColor or {0, 0, 0, 1},
     borderWeight = properties.borderWeight or 1,
     fillColor = properties.fillColor or {0, 0, 1, 1},
+    fillColorHover = properties.fillColorHover or {0, 0, 0.5, 1},
     roundness = properties.roundness or 5,
     value = properties.value or false,
   }
@@ -55,11 +56,17 @@ local function intersects(x, y, box)
   return intersectsX and intersectsY
 end
 
+function checkbox:update(dt)
+  self.hover = intersects(x, y, self)
+end
+
 function checkbox:draw()
   lg.push("all")
 
   if(self.value) then
-    lg.setColor(self.fillColor)
+    local fillColor = (self.hover) and self.fillColorHover or self.fillColor
+    lg.setColor(fillColor)
+
     lg.rectangle("fill", self.x, self.y, self.width, self.height, self.roundness, self.roundness)
 
     if(self.icon) then
@@ -92,7 +99,7 @@ end
 function checkbox:mousereleased(x, y, button)
   if(button ~= 1) then return end
 
-  if(intersects(x, y, self)) then
+  if(self.hover) then
     self.value = not self.value
   end
 end
