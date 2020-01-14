@@ -4,8 +4,6 @@
 local floor = math.floor
 local lg = love.graphics
 
--- 100,000 points 25,000 boxes 50,000 coordinates
-
 local function getTrueX(x)
   trueX = ((x - grid.halfWidth) * 2) / grid.tileSize
   return trueX
@@ -31,9 +29,7 @@ function Integral(equation)
   coords = equation:getCoords()
 
   for i = 1, 200000, 800 do
-    --if((coords[i + 1]) >= 0) then
       lg.rectangle("line", coords[i], grid.halfHeight, coords[i + 4] - coords[i], -(875) - (-(coords[i + 1])))
-    --end
   end
 
   lg.setColor(0,0,0)
