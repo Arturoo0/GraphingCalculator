@@ -29,7 +29,7 @@ end
 function Integral(equation)
 
   for i = 1, 200000, 800 do
-    if(coords[i + 1] >= 0) then
+    if(equation.coords[i + 1] >= 0) then
       lg.rectangle("line", coords[i], grid.halfHeight, coords[i + 4] - coords[i], -(875) - (-coords[i + 1]))
     end
   end

@@ -29,6 +29,7 @@ function grid:render(equations)
         local points, color = v:getRenderComponents()
         lg.setColor(color)
         lg.points(points)
+        Integral(equations)
       end
 
     end
