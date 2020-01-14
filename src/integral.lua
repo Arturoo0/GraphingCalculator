@@ -33,6 +33,6 @@ function Integral(equation)
   end
 
   lg.setColor(0,0,0)
-  lg.print("Definite Integral " .. floor(computeIntegral(coords) * 1000)/1000, 805, 540, r, 1.40, 1.40)
+  lg.print("Definite Integral: " .. floor(computeIntegral(coords) * 1000)/1000, 805, 540, r, 1.40, 1.40)
 
 end
