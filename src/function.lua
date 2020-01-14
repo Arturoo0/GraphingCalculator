@@ -1,6 +1,4 @@
 
-require "src/integral"
-
 local environment = {
   abs = math.abs,
   acos = math.acos,
