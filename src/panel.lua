@@ -64,7 +64,8 @@ function panel:load()
       width = 20,
       height = 20,
       img = checkboxImg,
-      fillColor = color:get("green-light")
+      fillColor = color:get("green-light"),
+      fillColorHover = color:get("green-dark")
     }
 
     self.previousInputs[i] = self.textboxes[i]:getText()
@@ -92,6 +93,9 @@ function panel:update(dt)
 
   for i = 1, self.numInputs do
     self.textboxes[i]:update(dt)
+    self.checkboxes[i]:update(dt)
+
+    self.equations[i].showIntegral = self.checkboxes[i]:getValue()
 
     local textboxInput = self.textboxes[i]:getText()
 
@@ -142,10 +146,7 @@ function panel:draw()
       self.textboxes[i].focusBorderColor = color:get(INPUT_BORDER_COLORS[isValid], 0.75)
 
       self.textboxes[i]:draw()
-    end
-
-    for _, cb in ipairs(self.checkboxes) do
-      cb:draw()
+      self.checkboxes[i]:draw()
     end
   else
     color:set("black-light")
@@ -191,6 +192,7 @@ function panel:mousereleased(x, y, button)
 
   self.status = intersects(x, y, target)
 
+  if(not self.status) then return end
   for _, cb in ipairs(self.checkboxes) do
     cb:mousereleased(x, y, button)
   end

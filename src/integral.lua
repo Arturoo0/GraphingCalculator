@@ -4,35 +4,33 @@
 local floor = math.floor
 local lg = love.graphics
 
-local function getTrueX(x)
-  trueX = ((x - grid.halfWidth) * 2) / grid.tileSize
-  return trueX
-end
+local function computeRiemannSum(func)
+  local sum = 0
+  local y = 0
 
-local function getTrueY(y)
-  trueY = ((y - grid.halfHeight) * -2) / grid.tileSize
-  return trueY
-end
-
-local function computeIntegral(coords)
-  sum = 0
-
-  for i = 1, 200000, 2 do
-    sum = sum + (getTrueX(coords[i + 2]) - getTrueX(coords[i])) * getTrueY(coords[i + 1])
+  for x = -50, 50, 0.001 do
+    y = func(x)
+    sum = sum + ((x + 0.001) - x) * y
   end
 
   return sum
 end
 
-function Integral(equation)
+local function truncate(x)
+  return floor(x * 1000) / 1000
+end
 
-  coords = equation:getCoords()
+local function drawIntegral(equation)
+
+  local coords = equation:getCoords()
 
   for i = 1, 200000, 800 do
     lg.rectangle("line", coords[i], grid.halfHeight, coords[i + 4] - coords[i], -(875) - (-(coords[i + 1])))
   end
 
   lg.setColor(0,0,0)
-  lg.print("Definite Integral: " .. floor(computeIntegral(coords) * 1000)/1000, 805, 540, r, 1.40, 1.40)
+  lg.print("Definite Integral " .. truncate(computeRiemannSum(equation.func)), 805, 540, r, 1.40, 1.40)
 
 end
+
+return drawIntegral

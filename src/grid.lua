@@ -2,6 +2,7 @@
 -- Grid layout and scale
 
 local lg = love.graphics
+local drawIntegral = require("src/integral")
 
 local grid = {
   tileSize = 35,
@@ -29,12 +30,12 @@ function grid:render(equations)
         lg.setColor(color)
         lg.points(points)
 
-        Integral(eq)
+        if(eq:drawIntegral()) then
+          drawIntegral(eq)
+        end
 
       end
-
     end
-
   end)
 end
 

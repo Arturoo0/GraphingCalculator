@@ -32,7 +32,6 @@ function love.load()
   color:setBackground("white-light")
 end
 
-
 function love.update(dt)
   if(not panel.status) then
     camera:update(dt)
