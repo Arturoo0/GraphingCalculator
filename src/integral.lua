@@ -29,7 +29,7 @@ local function getTrueY(y)
   return trueY
 end
 
-function computeIntegral()
+local function Integral()
   sum = 0
 
   for i = 1, 100000, 2 do
