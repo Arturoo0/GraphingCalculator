@@ -2,9 +2,9 @@
 -- Pop up panel
 
 local textbox = require("src/textbox")
+local checkbox = require("src/checkbox")
 local equation = require("src/equation")
 local parse = require("src/parse")
-
 
 local lg = love.graphics
 
@@ -39,12 +39,16 @@ local panel = {
 
   textboxes = {},
   equations = {},
+  checkboxes = {},
   previousInputs = {},
   renderKeys = {},
   renderTimer = 0,
 }
 
 function panel:load()
+
+  local checkboxImg = lg.newImage("img/check-solid.png")
+
   for i = 1, self.numInputs do
     self.textboxes[i] = textbox:new {
       width = self.width,
@@ -53,6 +57,16 @@ function panel:load()
       text = "y = ",
       font = lg.newFont(18)
     }
+
+    self.checkboxes[i] = checkbox:new {
+      x = 272,
+      y = (i - 1) * 100 + 8,
+      width = 20,
+      height = 20,
+      img = checkboxImg,
+      fillColor = color:get("green-light")
+    }
+
     self.previousInputs[i] = self.textboxes[i]:getText()
 
     self.equations[i] = equation:new {
@@ -129,6 +143,10 @@ function panel:draw()
 
       self.textboxes[i]:draw()
     end
+
+    for _, cb in ipairs(self.checkboxes) do
+      cb:draw()
+    end
   else
     color:set("black-light")
     lg.draw(button.icon.img, button.x, button.y, 0, button.icon.scaleX, button.icon.scaleY)
@@ -172,6 +190,10 @@ function panel:mousereleased(x, y, button)
   local target = (self.status) and self or self.button
 
   self.status = intersects(x, y, target)
+
+  for _, cb in ipairs(self.checkboxes) do
+    cb:mousereleased(x, y, button)
+  end
 end
 
 function panel:getEquations()
