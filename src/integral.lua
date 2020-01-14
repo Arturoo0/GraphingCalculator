@@ -29,7 +29,7 @@ function Integral(equation)
   coords = equation:getCoords()
 
   for i = 1, 200000, 800 do
-      lg.rectangle("line", coords[i], grid.halfHeight, coords[i + 4] - coords[i], -(875) - (-(coords[i + 1])))
+    lg.rectangle("line", coords[i], grid.halfHeight, coords[i + 4] - coords[i], -(875) - (-(coords[i + 1])))
   end
 
   lg.setColor(0,0,0)
