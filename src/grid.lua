@@ -30,6 +30,7 @@ function grid:render(equations)
         lg.setColor(color)
         lg.points(points)
       end
+
     end
 
   end)

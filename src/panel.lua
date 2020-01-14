@@ -5,6 +5,7 @@ local textbox = require("src/textbox")
 local equation = require("src/equation")
 local parse = require("src/parse")
 
+
 local lg = love.graphics
 
 local EQUATION_COLORS = {

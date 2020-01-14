@@ -1,4 +1,6 @@
 
+require "src/integral"
+
 local environment = {
   abs = math.abs,
   acos = math.acos,
@@ -18,6 +20,7 @@ local environment = {
   tan = math.tan,
   max = math.max,
   min = math.min,
+  Integral,
 }
 
 return environment
