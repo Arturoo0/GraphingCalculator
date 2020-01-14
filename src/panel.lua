@@ -64,7 +64,8 @@ function panel:load()
       width = 20,
       height = 20,
       img = checkboxImg,
-      fillColor = color:get("green-light")
+      fillColor = color:get("green-light"),
+      fillColorHover = color:get("green-dark")
     }
 
     self.previousInputs[i] = self.textboxes[i]:getText()
@@ -92,6 +93,7 @@ function panel:update(dt)
 
   for i = 1, self.numInputs do
     self.textboxes[i]:update(dt)
+    self.checkboxes[i]:update(dt)
 
     local textboxInput = self.textboxes[i]:getText()
 

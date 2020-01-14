@@ -1,7 +1,7 @@
 -- Author: Bruce Berrios
 -- Description: A checkbox class
 
-local lg = love.graphics
+local lg, lm = love.graphics, love.mouse
 
 local checkbox = {}
 
@@ -57,7 +57,10 @@ local function intersects(x, y, box)
 end
 
 function checkbox:update(dt)
-  self.hover = intersects(x, y, self)
+
+  local mouseX, mouseY = lm.getPosition()
+
+  self.hover = intersects(mouseX, mouseY, self)
 end
 
 function checkbox:draw()
