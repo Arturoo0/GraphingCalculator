@@ -142,10 +142,7 @@ function panel:draw()
       self.textboxes[i].focusBorderColor = color:get(INPUT_BORDER_COLORS[isValid], 0.75)
 
       self.textboxes[i]:draw()
-    end
-
-    for _, cb in ipairs(self.checkboxes) do
-      cb:draw()
+      self.checkboxes[i]:draw()
     end
   else
     color:set("black-light")
