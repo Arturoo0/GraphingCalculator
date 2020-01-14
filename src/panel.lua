@@ -188,6 +188,7 @@ function panel:mousereleased(x, y, button)
 
   self.status = intersects(x, y, target)
 
+  if(not self.status) then return end
   for _, cb in ipairs(self.checkboxes) do
     cb:mousereleased(x, y, button)
   end
