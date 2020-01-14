@@ -7,6 +7,7 @@ local grid = require("src/grid")
 
 local NUM_COORDS = 200002
 local set = rawset
+local max, min = math.max, math.min
 
 local equation = {}
 equation.__index = equation
@@ -34,8 +35,11 @@ function equation:recomputeCoords(func)
   local index = 1
 
   for x = -50, 50, 0.001 do
-    set(self.coords, index, ((grid.tileSize / 2) * x) + grid.halfWidth)
-    set(self.coords, index + 1, -((grid.tileSize / 2) * self.func(x)) + grid.halfHeight)
+    local ax = ((grid.tileSize / 2) * x) + grid.halfWidth
+    local ay = -((grid.tileSize / 2) * max(min(self.func(x), 50), -50)) + grid.halfHeight
+
+    set(self.coords, index, ax)
+    set(self.coords, index + 1, ay)
 
     index = index + 2
   end
