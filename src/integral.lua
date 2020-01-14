@@ -29,7 +29,7 @@ local function getTrueY(y)
   return trueY
 end
 
-function Integral()
+local function Integral()
   sum = 0
 
   for i = 1, 100000, 2 do
@@ -40,7 +40,7 @@ function Integral()
   return sum
 end
 
-function draw()
+function integralRender()
   eq:draw()
 
   for i = 1, 200000, 800 do
