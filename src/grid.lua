@@ -3,6 +3,7 @@
 
 local lg = love.graphics
 local drawIntegral = require("src/integral")
+local riemann = require("src/riemannSum")
 
 local grid = {
   tileSize = 35,
@@ -30,9 +31,7 @@ function grid:render(equations)
         lg.setColor(color)
         lg.points(points)
 
-        if(eq:drawIntegral()) then
-          drawIntegral(eq)
-        end
+        
 
       end
     end
