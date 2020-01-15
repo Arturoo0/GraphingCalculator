@@ -10,7 +10,7 @@ local color = {
 
 local HEX_PATTERN = "(%x%x)(%x%x)(%x%x)(%x%x)"
 
-function parseHex(hexString)
+local function parseHex(hexString)
   local newHex = tostr(hexString)
 
   newHex = (sub(newHex, 1, 1) == "#") and sub(newHex, 2, len(newHex)) or newHex
@@ -26,7 +26,7 @@ function parseHex(hexString)
   return rgba
 end
 
-function parseRGBA(rgba)
+local function parseRGBA(rgba)
   local newRGBA = {}
 
   for i = 1, 4 do
