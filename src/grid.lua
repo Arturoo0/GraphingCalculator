@@ -2,8 +2,7 @@
 -- Grid layout and scale
 
 local lg = love.graphics
-local drawIntegral = require("src/integral")
-local riemann = require("src/riemannSum")
+local riemann = require("src/riemann-sum")
 
 local grid = {
   tileSize = 35,
