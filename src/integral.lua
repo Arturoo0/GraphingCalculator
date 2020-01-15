@@ -29,7 +29,7 @@ local function drawIntegral(equation)
   end
 
   lg.setColor(0,0,0)
-  lg.print("Definite Integral " .. truncate(computeRiemannSum(equation.func)), 805, 540, r, 1.40, 1.40)
+  -- lg.print("Definite Integral " .. truncate(computeRiemannSum(equation.func)), 805, 540, r, 1.40, 1.40)
 
 end
 

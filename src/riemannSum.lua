@@ -1,6 +1,7 @@
 
 local lg = love.graphics
 local color = require("src/color")
+require "src/integral"
 
 local riemann = {
 
@@ -13,41 +14,41 @@ local riemann = {
 -- colors - purple
 -- colors - turquoise
 
-local function printRiemann(equation)
+function riemann.printRiemann(equation)
 
   -- green
-  if equation.getColor == parseRGBA(parseHex("#2ecc71")) or equation.getColor == parseRGBA(parseHex("#27ae60")) then
-    lg.print(drawIntegral(equation), 0 , 0)
+  if equation.getColor == color.parseRGBA(color.parseHex("#2ecc71")) or equation.getColor == color.parseRGBA(color.parseHex("#27ae60")) then
+    drawIntegral(equation)
   end
 
   -- blue
-  if equation.getColor == parseRGBA(parseHex("#3498db")) or equation.getColor == parseRGBA(parseHex("#2980b9")) then
-    lg.print(drawIntegral(equation), 20 , 20)
+  if equation.getColor == color.parseRGBA(color.parseHex("#3498db")) or equation.getColor == color.parseRGBA(color.parseHex("#2980b9")) then
+    drawIntegral(equation)
   end
 
   -- yellow
-  if equation.getColor == parseRGBA(parseHex("#f1c40f")) or equation.getColor == parseRGBA(parseHex("#f39c12")) then
-    lg.print(drawIntegral(equation), 40 , 40)
+  if equation.getColor == color.parseRGBA(color.parseHex("#f1c40f")) or equation.getColor == color.parseRGBA(color.parseHex("#f39c12")) then
+    drawIntegral(equation)
   end
 
   -- orange
-  if equation.getColor == parseRGBA(parseHex("#e67e22")) or equation.getColor == parseRGBA(parseHex("#d35400")) then
-    lg.print(drawIntegral(equation), 60 , 60)
+  if equation.getColor == color.parseRGBA(color.parseHex("#e67e22")) or equation.getColor == color.parseRGBA(color.parseHex("#d35400")) then
+    drawIntegral(equation)
   end
 
   -- red
-  if equation.getColor == parseRGBA(parseHex("#e74c3c")) or equation.getColor == parseRGBA(parseHex("#c0392b")) then
-    lg.print(drawIntegral(equation), 80 , 80)
+  if equation.getColor == color.parseRGBA(color.parseHex("#e74c3c")) or equation.getColor == color.parseRGBA(color.parseHex("#c0392b")) then
+    drawIntegral(equation)
   end
 
   -- purple
-  if equation.getColor == parseRGBA(parseHex("#9b59b6")) or equation.getColor == parseRGBA(parseHex("#8e44ad")) then
-    lg.print(drawIntegral(equation), 80 , 80)
+  if equation.getColor == color.parseRGBA(color.parseHex("#9b59b6")) or equation.getColor == color.parseRGBA(color.parseHex("#8e44ad")) then
+    drawIntegral(equation)
   end
 
   -- turquoise
-  if equation.getColor == parseRGBA(parseHex("#1abc9c")) or equation.getColor == parseRGBA(parseHex("#16a085")) then
-    lg.print(drawIntegral(equation), 80 , 80)
+  if equation.getColor == color.parseRGBA(color.parseHex("#1abc9c")) or equation.getColor == color.parseRGBA(color.parseHex("#16a085")) then
+    drawIntegral(equation)
   end
 
 end

@@ -31,7 +31,9 @@ function grid:render(equations)
         lg.setColor(color)
         lg.points(points)
 
-        
+        if (eq:drawIntegral() == true) then
+          riemann.printRiemann(eq)
+        end
 
       end
     end
