@@ -17,8 +17,7 @@ local environment = {
   sqrt = math.sqrt,
   tan = math.tan,
   max = math.max,
-  min = math.min,
-  Integral = Integral,
+  min = math.min
 }
 
 return environment
