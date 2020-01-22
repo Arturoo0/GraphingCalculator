@@ -5,7 +5,10 @@ local lg = love.graphics
 local floor = math.floor
 
 local riemann = {
-  textX = 1130
+  textX = 1130,
+  textY = 900,
+  textMargin = 30,
+  textScale = 2,
 }
 
 local function drawRiemann(equation)
@@ -38,56 +41,13 @@ local function computeRiemannSum(func)
   return truncate(sum)
 end
 
-function riemann:showRiemann(eq)
-  local eqColor = eq:getColor()
-  -- green
-  if eqColor == color:get("green-light") then
-    drawRiemann(eq)
-    color:set("green-dark")
-    lg.print("= " .. computeRiemannSum(eq:getFunc()), self.textX, 1040, 0, 2.0)
-  end
+function riemann:showRiemann(eq, num)
+  drawRiemann(eq)
+  color:setTable(eq:getColor())
 
-  -- blue
-  if eqColor == color:get("blue-light") then
-    drawRiemann(eq)
-    color:set("blue-light")
-    lg.print("= " .. computeRiemannSum(eq:getFunc()), self.textX, 1065, 0, 2.0)
-  end
+  local textY = self.textY + (self.textMargin * num)
 
-  -- yellow
-  if eqColor == color:get("yellow-light") then
-    drawRiemann(eq)
-    color:set("yellow-light")
-    lg.print("= " .. computeRiemannSum(eq:getFunc()), self.textX, 1090, 0, 2.0)
-  end
-
-  -- orange
-  if eqColor == color:get("orange-light") then
-    drawRiemann(eq)
-    color:set("orange-light")
-    lg.print("= " .. computeRiemannSum(eq:getFunc()), self.textX, 1115, 0, 2.0)
-  end
-
-  -- red
-  if eqColor == color:get("red-light") then
-    drawRiemann(eq)
-    color:set("red-light")
-    lg.print("= " .. computeRiemannSum(eq:getFunc()), self.textX, 1140, 0, 2.0)
-  end
-
-  -- purple
-  if eqColor == color:get("purple-light") then
-    drawRiemann(eq)
-    color:set("purple-light")
-    lg.print("= " .. computeRiemannSum(eq:getFunc()), self.textX, 1165, 0, 2.0)
-  end
-
-  -- turquoise
-  if eqColor == color:get("turquoise-light") then
-    drawRiemann(eq)
-    color:set("turquoise-light")
-    lg.print("= " .. computeRiemannSum(eq:getFunc()), self.textX, 1190, 0, 2.0)
-  end
+  lg.print("= " .. computeRiemannSum(eq:getFunc()), self.textX, textY, 0, self.textScale)
 end
 
 return riemann
