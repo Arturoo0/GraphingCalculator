@@ -40,6 +40,7 @@ local panel = {
   textboxes = {},
   equations = {},
   checkboxes = {},
+  areas = {},
   previousInputs = {},
   renderKeys = {},
   renderTimer = 0,
@@ -110,7 +111,7 @@ function panel:update(dt)
   self.renderTimer = self.renderTimer + dt
 
   if(self.renderTimer >= 0.5) then
-    grid:render(self.equations)
+    self.areas = grid:renderAndGetAreas(self.equations)
     self.renderTimer = 0
   end
 end
@@ -147,6 +148,11 @@ function panel:draw()
 
       self.textboxes[i]:draw()
       self.checkboxes[i]:draw()
+
+      if(self.areas[i]) then
+        color:set(EQUATION_COLORS[i])
+        lg.print("= " .. self.areas[i], self.textboxes[i].x, self.textboxes[i].y)
+      end
     end
   else
     color:set("black-light")
