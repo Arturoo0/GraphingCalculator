@@ -24,14 +24,14 @@ function grid:render(equations)
     lg.clear()
     lg.setPointSize(3)
 
-    for i, eq in ipairs(equations) do
-      if(eq:isValid()) then
-        local points, color = eq:getRenderComponents()
+    for i, equation in ipairs(equations) do
+      if(equation:isValid()) then
+        local points, color = equation:getRenderComponents()
         lg.setColor(color)
         lg.points(points)
 
-        if (eq:drawIntegral() == true) then
-          riemann:showRiemann(eq, i)
+        if (equation:drawIntegral() == true) then
+          riemann:showRiemann(equation, i)
         end
 
       end
