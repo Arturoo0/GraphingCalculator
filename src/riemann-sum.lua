@@ -1,4 +1,6 @@
 
+-- Author: Arturo Portelles
+
 local lg = love.graphics
 local floor = math.floor
 
