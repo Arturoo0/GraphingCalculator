@@ -36,7 +36,7 @@ function equation:recomputeCoords(func)
 
   for x = -50, 50, 0.001 do
     local ax = ((grid.tileSize / 2) * x) + grid.halfWidth
-    local ay = -((grid.tileSize / 2) * max(min(self.func(x), 50), -50)) + grid.halfHeight
+    local ay = -((grid.tileSize / 2) * self.func(x)) + grid.halfHeight
 
     set(self.coords, index, ax)
     set(self.coords, index + 1, ay)
@@ -62,7 +62,7 @@ function equation:drawIntegral()
 end
 
 function equation:getFunc()
-  return self.func 
+  return self.func
 end
 
 function equation:getColor()
