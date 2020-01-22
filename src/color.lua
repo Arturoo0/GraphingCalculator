@@ -60,6 +60,12 @@ function color:set(key, alpha)
   lg.setColor(r, g, b, a)
 end
 
+function color:setTable(table)
+  local r, g, b, a = unp(table)
+
+  lg.setColor(r, g, b, a)
+end
+
 function color:setBackground(key)
   lg.setBackgroundColor(self.colors[key])
 end
