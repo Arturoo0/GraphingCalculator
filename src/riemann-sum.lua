@@ -40,49 +40,49 @@ function riemann.printRiemann(eq)
   local eqColor = eq:getColor()
 
   -- green
-  if eqColor== color:get("green-light") then
+  if eqColor == color:get("green-light") then
     drawRiemann(eq)
     color:set("green-dark")
     lg.print(": " .. computeRiemannSum(eq:getFunc()), riemann.textX, 1040, r, 2.0)
   end
 
   -- blue
-  if eqColor== color:get("blue-light") then
+  if eqColor == color:get("blue-light") then
     drawRiemann(eq)
     color:set("blue-light")
     lg.print(": " .. computeRiemannSum(eq:getFunc()), riemann.textX, 1065, r, 2.0)
   end
 
   -- yellow
-  if eqColor== color:get("yellow-light") then
+  if eqColor == color:get("yellow-light") then
     drawRiemann(eq)
     color:set("yellow-light")
     lg.print(": " .. computeRiemannSum(eq:getFunc()), riemann.textX, 1090, r, 2.0)
   end
 
   -- orange
-  if eqColor== color:get("orange-light") then
+  if eqColor == color:get("orange-light") then
     drawRiemann(eq)
     color:set("orange-light")
     lg.print(": " .. computeRiemannSum(eq:getFunc()), riemann.textX, 1115, r, 2.0)
   end
 
   -- red
-  if eqColor== color:get("red-light") then
+  if eqColor == color:get("red-light") then
     drawRiemann(eq)
     color:set("red-light")
     lg.print(": " .. computeRiemannSum(eq:getFunc()), riemann.textX, 1140, r, 2.0)
   end
 
   -- purple
-  if eqColor== color:get("purple-light") then
+  if eqColor == color:get("purple-light") then
     drawRiemann(eq)
     color:set("purple-light")
     lg.print(": " .. computeRiemannSum(eq:getFunc()), riemann.textX, 1165, r, 2.0)
   end
 
   -- turquoise
-  if eqColor== color:get("turquoise-light") then
+  if eqColor == color:get("turquoise-light") then
     drawRiemann(eq)
     color:set("turquoise-light")
     lg.print(": " .. computeRiemannSum(eq:getFunc()), riemann.textX, 1190, r, 2.0)
