@@ -2,6 +2,7 @@
 -- Pop up panel
 
 local textbox = require("src/textbox")
+local checkbox = require("src/checkbox")
 local equation = require("src/equation")
 local parse = require("src/parse")
 
@@ -38,12 +39,16 @@ local panel = {
 
   textboxes = {},
   equations = {},
+  checkboxes = {},
   previousInputs = {},
   renderKeys = {},
   renderTimer = 0,
 }
 
 function panel:load()
+
+  local checkboxImg = lg.newImage("img/check-solid.png")
+
   for i = 1, self.numInputs do
     self.textboxes[i] = textbox:new {
       width = self.width,
@@ -52,6 +57,17 @@ function panel:load()
       text = "y = ",
       font = lg.newFont(18)
     }
+
+    self.checkboxes[i] = checkbox:new {
+      x = 272,
+      y = (i - 1) * 100 + 8,
+      width = 20,
+      height = 20,
+      img = checkboxImg,
+      fillColor = color:get("green-light"),
+      fillColorHover = color:get("green-dark")
+    }
+
     self.previousInputs[i] = self.textboxes[i]:getText()
 
     self.equations[i] = equation:new {
@@ -77,6 +93,9 @@ function panel:update(dt)
 
   for i = 1, self.numInputs do
     self.textboxes[i]:update(dt)
+    self.checkboxes[i]:update(dt)
+
+    self.equations[i].showIntegral = self.checkboxes[i]:getValue()
 
     local textboxInput = self.textboxes[i]:getText()
 
@@ -86,7 +105,7 @@ function panel:update(dt)
     end
   end
 
-  if(needValidation) then self:validateInput(dt) end
+  if(needValidation) then self:validateInput() end
 
   self.renderTimer = self.renderTimer + dt
 
@@ -127,6 +146,7 @@ function panel:draw()
       self.textboxes[i].focusBorderColor = color:get(INPUT_BORDER_COLORS[isValid], 0.75)
 
       self.textboxes[i]:draw()
+      self.checkboxes[i]:draw()
     end
   else
     color:set("black-light")
@@ -171,6 +191,11 @@ function panel:mousereleased(x, y, button)
   local target = (self.status) and self or self.button
 
   self.status = intersects(x, y, target)
+
+  if(not self.status) then return end
+  for _, cb in ipairs(self.checkboxes) do
+    cb:mousereleased(x, y, button)
+  end
 end
 
 function panel:getEquations()
