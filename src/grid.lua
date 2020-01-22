@@ -3,6 +3,7 @@
 
 local lg = love.graphics
 local riemann = require("src/riemann-sum")
+local set = rawset
 
 local grid = {
   tileSize = 35,
@@ -19,7 +20,9 @@ function grid:load()
   self.canvas = lg.newCanvas(self.width, self.height)
 end
 
-function grid:render(equations)
+function grid:renderAndGetAreas(equations)
+  local areas = {}
+
   self.canvas:renderTo(function()
     lg.clear()
     lg.setPointSize(3)
@@ -31,12 +34,15 @@ function grid:render(equations)
         lg.points(points)
 
         if (equation:drawIntegral() == true) then
-          riemann:showRiemann(equation, i)
+          local area = riemann(equation, i)
+          set(areas, i, area)
         end
 
       end
     end
   end)
+
+  return areas
 end
 
 function grid:draw()
