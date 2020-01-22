@@ -4,13 +4,6 @@
 local lg = love.graphics
 local floor = math.floor
 
-local riemann = {
-  textX = 1130,
-  textY = 900,
-  textMargin = 30,
-  textScale = 2,
-}
-
 local function drawRiemann(equation)
   local coords = equation:getCoords()
 
@@ -41,13 +34,9 @@ local function computeRiemannSum(func)
   return truncate(sum)
 end
 
-function riemann:showRiemann(eq, num)
+local function drawRiemannAndGetArea(eq, num)
   drawRiemann(eq)
-  color:setTable(eq:getColor())
-
-  local textY = self.textY + (self.textMargin * num)
-
-  lg.print("= " .. computeRiemannSum(eq:getFunc()), self.textX, textY, 0, self.textScale)
+  return computeRiemannSum(eq:getFunc())
 end
 
-return riemann
+return drawRiemannAndGetArea
