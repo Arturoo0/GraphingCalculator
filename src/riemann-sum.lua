@@ -7,15 +7,17 @@ local riemann = {
 }
 
 local function drawRiemann(equation)
-
   local coords = equation:getCoords()
 
   for i = 1, 200000, 800 do
-    lg.rectangle("line", coords[i], grid.halfHeight, coords[i + 4] - coords[i], -(875) - (-(coords[i + 1])))
-  end
+    local x = coords[i]
+    local y = grid.halfHeight
 
-  lg.setColor(0,0,0)
-  -- lg.print("Definite Integral " .. truncate(computeRiemannSum(equation.func)), 805, 540, r, 1.40, 1.40)
+    local x2 = coords[i + 4] - coords[i]
+    local y2 = -grid.halfWidth + coords[i + 1]
+
+    lg.rectangle("line", x, y, x2, y2)
+  end
 end
 
 local function truncate(x)
@@ -35,7 +37,6 @@ local function computeRiemannSum(func)
 end
 
 function riemann.printRiemann(eq)
-
   local eqColor = eq:getColor()
 
   -- green
@@ -86,7 +87,6 @@ function riemann.printRiemann(eq)
     color:set("turquoise-light")
     lg.print(": " .. computeRiemannSum(eq:getFunc()), riemann.textX, 1190, r, 2.0)
   end
-
 end
 
 return riemann
