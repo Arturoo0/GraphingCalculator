@@ -61,6 +61,10 @@ function equation:drawIntegral()
   return self.showIntegral
 end
 
+function equation:getFunc()
+  return self.func 
+end
+
 function equation:getColor()
   return self.color
 end
