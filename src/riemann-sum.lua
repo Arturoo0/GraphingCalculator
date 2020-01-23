@@ -34,6 +34,7 @@ local function computeRiemannSum(func)
   return truncate(sum)
 end
 
+-- function gets passed when file is required
 local function drawRiemannAndGetArea(eq, num)
   drawRiemann(eq)
   return computeRiemannSum(eq:getFunc())
