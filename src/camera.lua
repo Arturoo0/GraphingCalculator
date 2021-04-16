@@ -1,30 +1,21 @@
--- Author: Bruce Berrios
--- Description: Camera class
-
 local lg, lm, lk = love.graphics, love.mouse, love.keyboard
 
 local camera = {
   x = 0,
   y = 0,
-
   speed = 500,
-
   velX = 0,
   velY = 0,
-
   boundaries = {
     minX = 0,
     maxX = 0,
     minY = 0,
     maxY = 0,
   },
-
   initialX = 0,
   initialY = 0,
-
   clickedX = 0,
   clickedY = 0,
-
   wasClicked = false,
 }
 
@@ -42,16 +33,14 @@ end
 local function clamp(x, min, max)
   x = (x < min) and min or x
   x = (x > max) and max or x
-
   return x
 end
 
 function camera:control(dt)
-  local wIsDown = lk.isDown("w")
-  local aIsDown = lk.isDown("a")
-  local sIsDown = lk.isDown("s")
-  local dIsDown = lk.isDown("d")
-
+  local wIsDown = lk.isDown('w')
+  local aIsDown = lk.isDown('a')
+  local sIsDown = lk.isDown('s')
+  local dIsDown = lk.isDown('d')
   self.velY = (wIsDown) and -self.speed or 0
   self.velY = (sIsDown) and self.speed or self.velY
   self.velX = (aIsDown) and -self.speed or 0
@@ -60,32 +49,24 @@ end
 
 function camera:update(dt)
   local mouseX, mouseY = lm.getPosition()
-
-  if(lm.isDown(1)) then
-
-    if(not self.wasClicked) then
+  if (lm.isDown(1)) then
+    if (not self.wasClicked) then
       self.initialX = self.x
       self.initialY = self.y
       self.clickedX = mouseX
       self.clickedY = mouseY
-
       self.wasClicked = true
     end
-
     local dx = (self.clickedX - mouseX)
     local dy = (self.clickedY - mouseY)
-
     self.x = self.initialX + dx * 1.5
     self.y = self.initialY + dy * 1.5
   else
     self.wasClicked = false
-
     self:control(dt)
-
     self.x = self.x + self.velX * dt
     self.y = self.y + self.velY * dt
   end
-
   self.x = clamp(self.x, self.boundaries.minX, self.boundaries.maxX)
   self.y = clamp(self.y, self.boundaries.minY, self.boundaries.maxY)
 end
