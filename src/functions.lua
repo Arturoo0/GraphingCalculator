@@ -1,4 +1,3 @@
-
 local environment = {
   abs = math.abs,
   acos = math.acos,
@@ -17,7 +16,7 @@ local environment = {
   sqrt = math.sqrt,
   tan = math.tan,
   max = math.max,
-  min = math.min
+  min = math.min,
 }
 
 return environment
