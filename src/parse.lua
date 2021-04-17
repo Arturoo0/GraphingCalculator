@@ -1,4 +1,4 @@
-local environment = require('src/function')
+local environment = require('src/functions')
 
 local tagTable = {'return function(x) return ', '' , ' end'}
 local concat = table.concat
