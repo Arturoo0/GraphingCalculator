@@ -34,7 +34,6 @@ function grid:renderAndGetAreas(equations)
       end
     end
   end)
-
   return areas
 end
 
@@ -61,7 +60,15 @@ function grid:draw()
     currentX = 0
     currentY = currentY + self.tileSize
   end
-  for i = 1, 5 do 
+  lg.setLineWidth(5)
+  lg.line(0, self.halfHeight, self.width, self.halfHeight)
+  lg.line(self.halfWidth, 0, self.halfWidth, self.height)
+  lg.setColor(1, 1, 1, 1)
+  lg.setBlendMode('alpha', 'premultiplied')
+  lg.draw(self.canvas)
+  lg.setBlendMode('alpha')
+  color:set('black-dark', 0.55)
+  for i = 1, 5 do
     if (i == 5) then
       lg.print(-(i * self.scale), self.halfWidth + 5, yAxisTemp - 15, r, 1)
     else
@@ -70,7 +77,7 @@ function grid:draw()
     end
   end
   yAxisTemp = 0
-  for i = 5, 1, -1 do 
+  for i = 5, 1, -1 do
     lg.print((i * self.scale), self.halfWidth + 5, yAxisTemp + 3, r, 1)
     yAxisTemp = yAxisTemp + 175
   end
@@ -79,7 +86,7 @@ function grid:draw()
     xAxisTemp = xAxisTemp + 175
   end
   xAxisTemp = xAxisTemp + 175
-  for i = 1, 5 do 
+  for i = 1, 5 do
     if (i == 5) then
       lg.print((i * self.scale), xAxisTemp - 17, yAxisTemp + 3, r, 1)
     else
@@ -87,13 +94,6 @@ function grid:draw()
       xAxisTemp = xAxisTemp + 175
     end
   end
-  lg.setLineWidth(5)
-  lg.line(0, self.halfHeight, self.width, self.halfHeight)
-  lg.line(self.halfWidth, 0, self.halfWidth, self.height)
-  lg.setColor(1, 1, 1, 1)
-  lg.setBlendMode('alpha', 'premultiplied')
-  lg.draw(self.canvas)
-  lg.setBlendMode('alpha')
 end
 
 return grid

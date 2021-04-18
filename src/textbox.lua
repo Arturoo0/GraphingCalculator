@@ -1,7 +1,7 @@
 local utf8 = require('utf8')
 
 local lg = love.graphics
-local concat, len, sub, offset = table.concat, utf8.len, string.sub, utf8.offset
+local concat, len, sub, offset, byte = table.concat, utf8.len, string.sub, utf8.offset, string.byte
 local cos, max, min, floor = math.cos, math.max, math.min, math.floor
 local intersects = require('src/utils').intersects
 
@@ -91,6 +91,8 @@ end
 function textbox:getInput(key)
   if (not self.focus) then return end
   if (self.textLen >= self.maxinput) then return end
+  local byteCode = byte(key)
+  if (byteCode > 127) then return end
   local cursor = self.cursor
   local textBefore = sub(self.text, 1, cursor.position)
   local textAfter = sub(self.text, cursor.position + 1, self.textLen)
