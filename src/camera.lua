@@ -1,4 +1,5 @@
 local lg, lm, lk = love.graphics, love.mouse, love.keyboard
+local max, min = math.max, math.min
 
 local camera = {
   x = 0,
@@ -6,6 +7,9 @@ local camera = {
   speed = 500,
   velX = 0,
   velY = 0,
+  scale = 1,
+  maxZoom = 2,
+  minZoom = 0.5,
   boundaries = {
     minX = 0,
     maxX = 0,
@@ -57,28 +61,42 @@ function camera:update(dt)
       self.clickedY = mouseY
       self.wasClicked = true
     end
-    local dx = (self.clickedX - mouseX)
-    local dy = (self.clickedY - mouseY)
-    self.x = self.initialX + dx * 1.5
-    self.y = self.initialY + dy * 1.5
+    local dx = self.clickedX - mouseX
+    local dy = self.clickedY - mouseY
+    self.x = self.initialX + dx
+    self.y = self.initialY + dy
   else
     self.wasClicked = false
     self:control(dt)
     self.x = self.x + self.velX * dt
     self.y = self.y + self.velY * dt
   end
-  self.x = clamp(self.x, self.boundaries.minX, self.boundaries.maxX)
-  self.y = clamp(self.y, self.boundaries.minY, self.boundaries.maxY)
+  local scaledMaxX = self.boundaries.maxX - (lg.getWidth() / self.scale)
+  local scaledMaxY = self.boundaries.maxY - (lg.getHeight() / self.scale)
+  self.x = clamp(self.x, self.boundaries.minX, scaledMaxX)
+  self.y = clamp(self.y, self.boundaries.minY, scaledMaxY)
 end
 
 function camera:set()
   lg.push()
+  lg.scale(self.scale)
   lg.translate(-self.x, -self.y)
 end
 
 function camera:unset()
   lg.translate(self.x, self.y)
   lg.pop()
+end
+
+function camera:wheelmoved(x, y)
+  local oldScale = self.scale
+  self.scale = self.scale + (y * 0.016)
+  self.scale = max(min(self.scale, self.maxZoom), self.minZoom)
+  local mouseX, mouseY = lm.getPosition()
+  local dx = (mouseX / self.scale) - (mouseX / oldScale)
+  local dy = (mouseY / self.scale) - (mouseY / oldScale)
+  self.x = self.x - dx
+  self.y = self.y - dy
 end
 
 return camera

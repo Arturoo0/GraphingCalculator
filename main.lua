@@ -19,8 +19,8 @@ function love.load()
   camera:setBoundaries {
     minX = 0,
     minY = 0,
-    maxX = grid.width - WIDTH,
-    maxY = grid.height - HEIGHT
+    maxX = grid.width,
+    maxY = grid.height,
   }
   color:setBackground('white-light')
 end
@@ -55,4 +55,8 @@ end
 
 function love.textinput(key)
   panel:textinput(key)
+end
+
+function love.wheelmoved(x, y)
+  camera:wheelmoved(x, y)
 end
