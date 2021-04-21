@@ -27,7 +27,7 @@ function grid:renderAndGetAreas(equations)
         local points, color = equation:getRenderComponents()
         lg.setColor(color)
         lg.points(points)
-        if (equation:drawIntegral() == true) then
+        if (equation:drawIntegral()) then
           local area = riemann(equation, i)
           set(areas, i, area)
         end
