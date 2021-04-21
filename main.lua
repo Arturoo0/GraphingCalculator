@@ -26,7 +26,7 @@ function love.load()
 end
 
 function love.update(dt)
-  if (not panel.status) then
+  if (not panel.visible) then
     camera:update(dt)
   end
   panel:update(dt)
