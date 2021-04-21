@@ -17,6 +17,8 @@ function checkbox:new(properties)
     fillColorHover = properties.fillColorHover or {0, 0, 0.5, 1},
     roundness = properties.roundness or 5,
     value = properties.value or false,
+    onChange = properties.onChange or function(self) return true end,
+    target = properties.target or nil,
   }
   if (properties.img) then
     cb.icon = {
@@ -77,6 +79,7 @@ function checkbox:mousereleased(x, y, button)
   if (button ~= 1) then return end
   if (self.hover) then
     self.value = not self.value
+    self:onChange()
   end
 end
 

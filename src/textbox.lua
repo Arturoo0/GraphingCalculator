@@ -24,6 +24,8 @@ function textbox:new(properties)
     focus = false,
     offset = 0,
     maxinput = properties.maxinput or 140,
+    onChange = properties.onChange or function(self) return true end,
+    target = properties.target or nil,
   }
   tb.maxCharacterWidth = tb.font:getWidth('W|')
   tb.fontHeight = tb.font:getHeight()
@@ -99,6 +101,7 @@ function textbox:getInput(key)
   self.text = concat{textBefore, key, textAfter}
   self.textLen = len(self.text)
   cursor.position = cursor.position + 1
+  self:onChange()
 end
 
 local function map(x, min, max, min1, max2)
@@ -132,6 +135,7 @@ function textbox:keypressed(key)
       self.textLen = len(self.text)
       cursor.position = cursor.position - 1
     end
+    self:onChange()
   end
   if (key == 'left') then
     cursor.position = max(cursor.position - 1, 0)
